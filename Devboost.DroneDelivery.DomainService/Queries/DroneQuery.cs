@@ -23,7 +23,7 @@ namespace Devboost.DroneDelivery.DomainService.Queries
 
         public async Task<List<ConsultaDronePedidoDTO>> ConsultaDrone()
         {
-            var listaDrones = await _dronesRepository.GetAll();
+           // var listaDrones = await _dronesRepository.GetAll();
             //AtualizaStatusDrones(listaDrones); Por enquanto os Drones nao serão atualizados via consulta de pedido, talvez um fila será responável por fazer essa atualização
             var drones = await _dronesRepository.GetAll();
             return drones.Select(async d => await RetornaConsultaDronePedido(d))

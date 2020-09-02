@@ -1,18 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
-using System.Security.Principal;
-using System.Threading.Tasks;
-using AutoBogus;
+﻿using AutoBogus;
 using Devboost.DroneDelivery.Api.Controllers;
-using Devboost.DroneDelivery.Domain.DTOs;
 using Devboost.DroneDelivery.Domain.Interfaces.Commands;
 using Devboost.DroneDelivery.Domain.Interfaces.Queries;
 using Devboost.DroneDelivery.Domain.Params;
 using KellermanSoftware.CompareNetObjects;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Moq.AutoMock;
 using Xunit;
 
 namespace Devboost.DroneDelivery.Tests.API
