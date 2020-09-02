@@ -4,6 +4,6 @@ namespace Devboost.DroneDelivery.Domain.Interfaces.Commands
 {
     public interface IEntregaCommand
     {
-        Task Inicia();
+        Task<bool> Inicia();
     }
 }

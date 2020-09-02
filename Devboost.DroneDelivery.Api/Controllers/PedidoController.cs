@@ -23,26 +23,24 @@ namespace Devboost.DroneDelivery.Api.Controllers
             _pedidoQuery = pedidoQuery;
             _login = login ?? User.Identity.Name;
         }
-        
+
         [HttpPost("cadastrar")]
         [Authorize(Roles = "Comprador,Administrador")]
-        public async Task<IActionResult>  Cadastrar(PedidoParam pedido)
+        public async Task<IActionResult> Cadastrar(PedidoParam pedido)
         {
             try
             {
                 pedido.Login = _login;
 
-               var resultado = await _pedidoCommand.InserirPedido(pedido);
-               if (!resultado)
-                   return BadRequest("Pedido não aceito");
-               return Ok("Pedido realizado com sucesso!");
+                var resultado = await _pedidoCommand.InserirPedido(pedido);
+                if (!resultado)
+                    return BadRequest("Pedido não aceito");
+                return Ok("Pedido realizado com sucesso!");
             }
             catch (Exception e)
             {
-              return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
-
         }
 
         [HttpGet("list")]
@@ -59,7 +57,6 @@ namespace Devboost.DroneDelivery.Api.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
-
         }
     }
 }

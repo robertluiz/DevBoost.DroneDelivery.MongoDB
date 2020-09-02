@@ -23,19 +23,18 @@ namespace Devboost.DroneDelivery.Api.Controllers
 
         [HttpGet("situacao")]
         [AllowAnonymous]
-        public async Task<IActionResult>  SituacaoDrone()
+        public async Task<IActionResult> SituacaoDrone()
         {
             try
             {
                 var lista = await _droneQuery.ConsultaDrone();
-                if(lista.Count.Equals(0)) return NotFound();
+                if (lista.Count.Equals(0)) return NotFound();
                 return Ok(lista);
             }
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
-
         }
     }
 }

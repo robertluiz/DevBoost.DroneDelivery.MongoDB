@@ -8,67 +8,68 @@ using Devboost.DroneDelivery.Domain.Params;
 using KellermanSoftware.CompareNetObjects;
 using Moq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Devboost.DroneDelivery.Tests.API
 {
-    public class PedidoControllerTest
+    public class UsuarioControllerTest
     {
         [Fact(DisplayName = "Cadastrar")]
-        [Trait("PedidoControllerTest", "Controller Tests")]
+        [Trait("UsuarioControllerTest", "Controller Tests")]
         public async void Cadastrar_test()
         {
             //Given
-
-            var queryMock = new Mock<IPedidoQuery>();
-            var commandMock = new Mock<IPedidoCommand>();
+            var mocker = new AutoMoqer();
+            var baseControllerMock = mocker.Create<UsuarioController>();
 
             var faker = AutoFaker.Create();
 
-            var param = faker.Generate<PedidoParam>();
+            var param = faker.Generate<UsuarioParam>();
 
-            var response = "Pedido realizado com sucesso!";
+            var response = true;
 
-            var baseControllerMock = new PedidoController(commandMock.Object, queryMock.Object, "User");
-            var expectResponse = baseControllerMock.Ok(response);
+            var responseTask = Task.Factory.StartNew(() => response);
 
-            commandMock.Setup(r => r.InserirPedido(It.IsAny<PedidoParam>())).ReturnsAsync(true).Verifiable();
+            var expectResponse = baseControllerMock.Ok("Usuário cadastrado com sucesso!");
+
+            var service = mocker.GetMock<IUsuarioCommand>();
+            service.Setup(r => r.Criar(param)).Returns(responseTask).Verifiable();
 
             //When
-
             var result = await baseControllerMock.Cadastrar(param);
 
             //Then
             var comparison = new CompareLogic();
-            commandMock.Verify(mock => mock.InserirPedido(It.IsAny<PedidoParam>()), Times.Once());
+            service.Verify(mock => mock.Criar(param), Times.Once());
             Assert.True(comparison.Compare(result, expectResponse).AreEqual);
         }
 
         [Fact(DisplayName = "GetAll")]
-        [Trait("PedidoControllerTest", "Controller Tests")]
+        [Trait("UsuarioControllerTest", "Controller Tests")]
         public async void GetAll_test()
         {
             //Given
-            var queryMock = new Mock<IPedidoQuery>();
-            var commandMock = new Mock<IPedidoCommand>();
-
             var mocker = new AutoMoqer();
-            var baseControllerMock = new PedidoController(commandMock.Object, queryMock.Object, "User");
+            var baseControllerMock = mocker.Create<UsuarioController>();
 
             var faker = AutoFaker.Create();
 
-            var response = faker.Generate<List<PedidoEntity>>();
+            var response = faker.Generate<List<UsuarioEntity>>();
+
+            var responseTask = Task.Factory.StartNew(() => response);
 
             var expectResponse = baseControllerMock.Ok(response);
 
-            queryMock.Setup(r => r.GetAll()).ReturnsAsync(response).Verifiable();
+            var service = mocker.GetMock<IUsuarioQuery>();
+            service.Setup(r => r.GetAll()).Returns(responseTask).Verifiable();
 
             //When
             var result = await baseControllerMock.GetAll();
 
             //Then
             var comparison = new CompareLogic();
-            queryMock.Verify(mock => mock.GetAll(), Times.Once());
+            service.Verify(mock => mock.GetAll(), Times.Once());
             Assert.True(comparison.Compare(result, expectResponse).AreEqual);
         }
     }

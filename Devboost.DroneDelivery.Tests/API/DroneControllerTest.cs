@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-
-using AutoBogus;
+﻿using AutoBogus;
+using AutoMoqCore;
 using Devboost.DroneDelivery.Api.Controllers;
 using Devboost.DroneDelivery.Domain.DTOs;
 using Devboost.DroneDelivery.Domain.Interfaces.Queries;
 using KellermanSoftware.CompareNetObjects;
-using Microsoft.AspNetCore.Http;
 using Moq;
-using Moq.AutoMock;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Devboost.DroneDelivery.Tests.API
@@ -20,8 +18,8 @@ namespace Devboost.DroneDelivery.Tests.API
         public async void SituacaoDrone_test()
         {
             //Given
-            var mocker = new AutoMocker();
-            var baseControllerMock = mocker.CreateInstance<DroneController>();
+            var mocker = new AutoMoqer();
+            var baseControllerMock = mocker.Create<DroneController>();
 
             var faker = AutoFaker.Create();
 
@@ -43,6 +41,5 @@ namespace Devboost.DroneDelivery.Tests.API
             service.Verify(mock => mock.ConsultaDrone(), Times.Once());
             Assert.True(comparison.Compare(result, expectResponse).AreEqual);
         }
-
     }
 }
