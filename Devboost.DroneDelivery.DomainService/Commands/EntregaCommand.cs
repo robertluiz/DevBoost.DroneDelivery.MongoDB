@@ -1,5 +1,5 @@
 ﻿using Devboost.DroneDelivery.Domain.Interfaces.Commands;
-using Devboost.DroneDelivery.Domain.Interfaces.Services;
+using System;
 using System.Threading.Tasks;
 
 namespace Devboost.DroneDelivery.DomainService
@@ -13,9 +13,19 @@ namespace Devboost.DroneDelivery.DomainService
             _droneCommand = droneCommand;            
         }
 
-        public async Task Inicia()
+        public async Task<bool> Inicia()
         {
-            await _droneCommand.LiberaDrone();
+            try
+            {
+                await _droneCommand.LiberaDrone();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return true;
         }        
     }
 }

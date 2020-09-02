@@ -24,9 +24,11 @@ namespace Devboost.DroneDelivery.Api.Controllers
         {
             try
             {
-               await _entregaCommand.Inicia();
+                var resultado = await _entregaCommand.Inicia();
 
-               return Ok("Entrega iniciada!");
+                if (!resultado)
+                    return BadRequest("Erro ao iniciar a Entrega!");
+                return Ok("Entrega iniciada!");
             }
             catch (Exception e)
             {
