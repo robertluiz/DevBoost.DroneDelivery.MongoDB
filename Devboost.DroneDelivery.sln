@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devboost.DroneDelivery.Api", "Devboost.DroneDelivery.Api\Devboost.DroneDelivery.Api.csproj", "{9DCC19A4-BD51-4A67-BB6E-4A7156094614}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Devboost.DroneDelivery.Api", "Devboost.DroneDelivery.Api\Devboost.DroneDelivery.Api.csproj", "{9DCC19A4-BD51-4A67-BB6E-4A7156094614}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devboost.DroneDelivery.Domain", "Devboost.DroneDelivery.Domain\Devboost.DroneDelivery.Domain.csproj", "{67350861-CAAB-4741-AD92-02D11B92C23F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Devboost.DroneDelivery.Domain", "Devboost.DroneDelivery.Domain\Devboost.DroneDelivery.Domain.csproj", "{67350861-CAAB-4741-AD92-02D11B92C23F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devboost.DroneDelivery.DomainService", "Devboost.DroneDelivery.DomainService\Devboost.DroneDelivery.DomainService.csproj", "{CFE875EE-006C-4D90-8FFD-FA99A9B0F2BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Devboost.DroneDelivery.DomainService", "Devboost.DroneDelivery.DomainService\Devboost.DroneDelivery.DomainService.csproj", "{CFE875EE-006C-4D90-8FFD-FA99A9B0F2BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devboost.DroneDelivery.Repository", "Devboost.DroneDelivery.Repository\Devboost.DroneDelivery.Repository.csproj", "{E44FAB15-B9B1-4583-ADCC-7D1B0EC5B72F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Devboost.DroneDelivery.Repository", "Devboost.DroneDelivery.Repository\Devboost.DroneDelivery.Repository.csproj", "{E44FAB15-B9B1-4583-ADCC-7D1B0EC5B72F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devboost.DroneDelivery.IoC", "Devboost.DroneDelivery.IoC\Devboost.DroneDelivery.IoC.csproj", "{BA14E1AC-3CF9-440E-BBFB-7358497B51B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Devboost.DroneDelivery.IoC", "Devboost.DroneDelivery.IoC\Devboost.DroneDelivery.IoC.csproj", "{BA14E1AC-3CF9-440E-BBFB-7358497B51B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devboost.DroneDelivery.Tests", "Devboost.DroneDelivery.Tests\Devboost.DroneDelivery.Tests.csproj", "{90043B00-E8D3-4DDB-BFC4-518B6166AC0B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{BA14E1AC-3CF9-440E-BBFB-7358497B51B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA14E1AC-3CF9-440E-BBFB-7358497B51B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA14E1AC-3CF9-440E-BBFB-7358497B51B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90043B00-E8D3-4DDB-BFC4-518B6166AC0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90043B00-E8D3-4DDB-BFC4-518B6166AC0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90043B00-E8D3-4DDB-BFC4-518B6166AC0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90043B00-E8D3-4DDB-BFC4-518B6166AC0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

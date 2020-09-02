@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoBogus" Version="2.10.0" />
+    <PackageReference Include="AutoMoq" Version="2.0.0" />
+    <PackageReference Include="AutoMoqCore" Version="1.0.0" />
+    <PackageReference Include="Bogus" Version="30.0.4" />
+    <PackageReference Include="CompareNETObjects" Version="4.66.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Moq.AutoMock" Version="0.4.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    <PackageReference Include="coverlet.collector" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repository\" />
+    <Folder Include="Service\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Devboost.DroneDelivery.Api\Devboost.DroneDelivery.Api.csproj" />
+    <ProjectReference Include="..\Devboost.DroneDelivery.Domain\Devboost.DroneDelivery.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
