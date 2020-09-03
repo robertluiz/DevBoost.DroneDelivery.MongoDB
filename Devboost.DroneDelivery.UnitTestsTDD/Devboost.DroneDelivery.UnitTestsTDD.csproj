@@ -12,6 +12,10 @@
     <PackageReference Include="Bogus" Version="30.0.4" />
     <PackageReference Include="CompareNETObjects" Version="4.66.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="ServiceStack.OrmLite" Version="5.9.2" />
+    <PackageReference Include="ServiceStack.OrmLite.Sqlite" Version="5.9.2" />
+    <PackageReference Include="ServiceStack.OrmLite.SqlServer" Version="5.9.2" />
+    <PackageReference Include="SQLite" Version="3.13.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
@@ -20,12 +24,20 @@
   <ItemGroup>
     <Folder Include="Service\" />
     <Folder Include="Repository\" />
+    <Folder Include="Utils" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Devboost.DroneDelivery.Api\Devboost.DroneDelivery.Api.csproj" />
     <ProjectReference Include="..\Devboost.DroneDelivery.DomainService\Devboost.DroneDelivery.DomainService.csproj" />
     <ProjectReference Include="..\Devboost.DroneDelivery.Domain\Devboost.DroneDelivery.Domain.csproj" />
+    <ProjectReference Include="..\Devboost.DroneDelivery.Repository\Devboost.DroneDelivery.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Repository\PedidosRepositoryFake.cs" />
+    <Compile Remove="Repository\DronesRepositoryFake.cs" />
+    <Compile Remove="Repository\DronesRepositoryTests.cs" />
   </ItemGroup>
 
 </Project>

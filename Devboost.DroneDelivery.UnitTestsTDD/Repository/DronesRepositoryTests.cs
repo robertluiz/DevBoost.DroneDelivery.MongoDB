@@ -26,7 +26,7 @@ namespace Devboost.DroneDelivery.Tests.Repository
         public DronesRepositoryTests()
         {
             _autoFaker = AutoFaker.Create();
-            _repositoryDrone = new DronesRepositoryFake();
+            
         }
 
         [Fact(DisplayName = "DroneAtualizar")]

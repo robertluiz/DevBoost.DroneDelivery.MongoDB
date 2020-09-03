@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Devboost.DroneDelivery.Domain.Interfaces.Commands;
+﻿using Devboost.DroneDelivery.Domain.Interfaces.Commands;
 using Devboost.DroneDelivery.Domain.Interfaces.Queries;
 using Devboost.DroneDelivery.Domain.Interfaces.Repository;
 using Devboost.DroneDelivery.Domain.Interfaces.Services;
