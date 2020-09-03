@@ -7,7 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoBogus" Version="2.10.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0-preview.8.20407.11" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="ServiceStack.OrmLite.SqlServer.Core" Version="5.9.2" />
     <PackageReference Include="SpecFlow" Version="3.4.3" />
     <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.4.3" />
     <PackageReference Include="SpecFlow.xUnit" Version="3.4.3" />
@@ -17,6 +20,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Devboost.DroneDelivery.DomainService\Devboost.DroneDelivery.DomainService.csproj" />
+    <ProjectReference Include="..\Devboost.DroneDelivery.Domain\Devboost.DroneDelivery.Domain.csproj" />
+    <ProjectReference Include="..\Devboost.DroneDelivery.Repository\Devboost.DroneDelivery.Repository.csproj" />
   </ItemGroup>
 
 </Project>
