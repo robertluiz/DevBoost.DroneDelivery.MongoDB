@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Devboost.DroneDelivery.Domain.Entities;
@@ -13,56 +14,54 @@ using ServiceStack.OrmLite;
 
 namespace Devboost.DroneDelivery.Repository.Implementation
 {
-    public class DronesRepository : IDronesRepository
+    public class DronesRepository : IDronesRepository, IDisposable
     {
-        private readonly string _configConnectionString = "DroneDelivery";
-        private readonly IDbConnectionFactoryExtended _dbFactory; 
+        private readonly IDbConnection _connection; 
         
-        public DronesRepository(IConfiguration config)
+        public DronesRepository(IDbConnection connection)
         {
-            _dbFactory = new OrmLiteConnectionFactory(
-                config.GetConnectionString(_configConnectionString),  
-                SqlServerDialect.Provider);
+            _connection = connection;
+            
         }        
 
         public async Task<List<DroneEntity>> GetAll()
         {
-            using var conexao= await _dbFactory.OpenAsync();
-            if (conexao.CreateTableIfNotExists<Drone>())
+            
+            if (_connection.CreateTableIfNotExists<Drone>())
             {
-                await conexao.InsertAllAsync(SeedDrone());
+                await _connection.InsertAllAsync(SeedDrone());
             }
-            var list = await conexao.SelectAsync<Drone>();
+            var list = await _connection.SelectAsync<Drone>();
                 
             return list.ConvertTo<List<DroneEntity>>();
         }
 
         public async Task<List<DroneEntity>> GetByStatus(string status)
         {
-            using var conexao = await _dbFactory.OpenAsync();
-            conexao.CreateTableIfNotExists<Drone>();
+           
+            _connection.CreateTableIfNotExists<Drone>();
             
-            var list = await conexao.SelectAsync<Drone>(d => d.Status == status);
+            var list = await _connection.SelectAsync<Drone>(d => d.Status == status);
             return list.ConvertTo<List<DroneEntity>>();
         }
 
         public async Task Atualizar(DroneEntity drone)
         {
             var model = drone.ConvertTo<Drone>();
-            using var conexao = await _dbFactory.OpenAsync();
+           
             
-            conexao.CreateTableIfNotExists<Drone>();
-            await conexao.UpdateAsync(model);
+            _connection.CreateTableIfNotExists<Drone>();
+            await _connection.UpdateAsync(model);
             
         }
 
         public async Task Incluir(DroneEntity drone)
         {
             var model = drone.ConvertTo<Drone>();
-            using var conexao=  await _dbFactory.OpenAsync();
+           
             
-            conexao.CreateTableIfNotExists<Drone>();
-            await conexao.InsertAsync(model);
+            _connection.CreateTableIfNotExists<Drone>();
+            await _connection.InsertAsync(model);
         }
         
 
@@ -143,6 +142,27 @@ namespace Devboost.DroneDelivery.Repository.Implementation
             };
 
         }
-        
+
+
+
+        protected virtual void Dispose(bool disposing)
+        {
+
+            if (disposing)
+            {
+                _connection?.Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~DronesRepository()
+        {
+            Dispose(false);
+        }
     }
 }

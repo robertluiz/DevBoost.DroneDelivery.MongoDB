@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Devboost.DroneDelivery.Domain.Entities;
@@ -13,23 +14,20 @@ using ServiceStack.OrmLite;
 
 namespace Devboost.DroneDelivery.Repository.Implementation
 {
-    public class PedidosRepository : IPedidosRepository
+    public class PedidosRepository : IPedidosRepository, IDisposable
     {
-        private readonly string _configConnectionString = "DroneDelivery";
-        private readonly IDbConnectionFactoryExtended _dbFactory; 
+        private readonly IDbConnection _connection;
 
-        public PedidosRepository(IConfiguration config)
+        public PedidosRepository(IDbConnection connection)
         {
-            _dbFactory = new OrmLiteConnectionFactory(
-                config.GetConnectionString(_configConnectionString),  
-                SqlServerDialect.Provider);
+            _connection = connection;
         }
 
         public async Task<List<PedidoEntity>> GetAll()
         {
-            using var conexao = await _dbFactory.OpenAsync();
+            
 
-            var list = await conexao.SelectAsync<Pedido>();
+            var list = await _connection.SelectAsync<Pedido>();
 
             return list.ConvertTo<List<PedidoEntity>>();
 
@@ -37,9 +35,9 @@ namespace Devboost.DroneDelivery.Repository.Implementation
 
         public async Task<List<PedidoEntity>> GetByDroneID(Guid droneId)
         {
-            using var conexao = await _dbFactory.OpenAsync();
-            conexao.CreateTableIfNotExists<Pedido>();
-            var p = await conexao.SelectAsync<Pedido>(
+            
+            _connection.CreateTableIfNotExists<Pedido>();
+            var p = await _connection.SelectAsync<Pedido>(
                 p =>
                     p.DroneId == droneId);
 
@@ -49,9 +47,9 @@ namespace Devboost.DroneDelivery.Repository.Implementation
 
         public async Task<List<PedidoEntity>> GetByDroneIDAndStatus(Guid droneId, PedidoStatus status)
         {
-            using var conexao = await _dbFactory.OpenAsync();
-            conexao.CreateTableIfNotExists<Pedido>();
-            var p = await conexao.SelectAsync<Pedido>(
+            
+            _connection.CreateTableIfNotExists<Pedido>();
+            var p = await _connection.SelectAsync<Pedido>(
                 p =>
                     p.DroneId == droneId
                     && p.Status == status.ToString());
@@ -62,9 +60,9 @@ namespace Devboost.DroneDelivery.Repository.Implementation
 
         public async Task<PedidoEntity> GetSingleByDroneID(Guid droneId)
         {
-            using var conexao = await _dbFactory.OpenAsync();
-            conexao.CreateTableIfNotExists<Pedido>();
-            var p = await conexao.SingleAsync<Pedido>(
+            
+            _connection.CreateTableIfNotExists<Pedido>();
+            var p = await _connection.SingleAsync<Pedido>(
                 p =>
                     p.DroneId == droneId
                     && p.Status == PedidoStatus.EmTransito.ToString());
@@ -76,23 +74,43 @@ namespace Devboost.DroneDelivery.Repository.Implementation
         public async Task Inserir(PedidoEntity pedido)
         {
             var model = pedido.ConvertTo<Pedido>();
-            using var conexao = await _dbFactory.OpenAsync();
             
-            conexao.CreateTableIfNotExists<Pedido>();
-            await conexao.InsertAsync(model);
+            
+            _connection.CreateTableIfNotExists<Pedido>();
+            await _connection.InsertAsync(model);
 
         }
 
         public async Task Atualizar(PedidoEntity pedido)
         {
             var model = pedido.ConvertTo<Pedido>();
-            using var conexao = await _dbFactory.OpenAsync();
             
-             conexao.CreateTableIfNotExists<Pedido>();
-             await conexao.UpdateAsync(model);
+            
+             _connection.CreateTableIfNotExists<Pedido>();
+             await _connection.UpdateAsync(model);
          
         }
-        
 
+
+
+        protected virtual void Dispose(bool disposing)
+        {
+
+            if (disposing)
+            {
+                _connection?.Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~PedidosRepository()
+        {
+            Dispose(false);
+        }
     }
 }

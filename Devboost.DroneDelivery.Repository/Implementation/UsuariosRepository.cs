@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 using Devboost.DroneDelivery.Domain.Entities;
 using Devboost.DroneDelivery.Domain.Enums;
@@ -12,33 +13,30 @@ using ServiceStack.OrmLite;
 
 namespace Devboost.DroneDelivery.Repository.Implementation
 {
-    public class UsuariosRepository : IUsuariosRepository
+    public class UsuariosRepository : IUsuariosRepository, IDisposable
     {
-        private readonly string _configConnectionString = "DroneDelivery";
-        private readonly IDbConnectionFactoryExtended _dbFactory; 
-        
-        public UsuariosRepository(IConfiguration config)
+        private readonly IDbConnection _connection;
+
+        public UsuariosRepository(IDbConnection connection)
         {
-            _dbFactory = new OrmLiteConnectionFactory(
-                config.GetConnectionString(_configConnectionString),  
-                SqlServerDialect.Provider);
+            _connection = connection;
         }
 
         public async Task Inserir(UsuarioEntity user)
         {
             var model = user.ConvertTo<Usuario>();
-            using var conexao = await _dbFactory.OpenAsync();
+            
 
-            conexao.CreateTableIfNotExists<Usuario>();
-            await conexao.InsertAsync(model);
+            _connection.CreateTableIfNotExists<Usuario>();
+            await _connection.InsertAsync(model);
 
         }
 
         public async Task<List<UsuarioEntity>> GetAll()
         {
-            using var conexao = await _dbFactory.OpenAsync();
+            
 
-            var list = await conexao.SelectAsync<Usuario>();
+            var list = await _connection.SelectAsync<Usuario>();
 
             return list.ConvertTo<List<UsuarioEntity>>();
 
@@ -46,9 +44,9 @@ namespace Devboost.DroneDelivery.Repository.Implementation
 
         public async Task<UsuarioEntity> GetSingleById(Guid id)
         {
-            using var conexao = await _dbFactory.OpenAsync();
-            conexao.CreateTableIfNotExists<Usuario>();
-            var u = await conexao.SingleAsync<Usuario>(
+            
+            _connection.CreateTableIfNotExists<Usuario>();
+            var u = await _connection.SingleAsync<Usuario>(
                 u =>
                     u.Id == id);
 
@@ -58,9 +56,9 @@ namespace Devboost.DroneDelivery.Repository.Implementation
 
         public async Task<UsuarioEntity> GetSingleByLogin(string login)
         {
-            using var conexao = await _dbFactory.OpenAsync();
-            conexao.CreateTableIfNotExists<Usuario>();
-            var u = await conexao.SingleAsync<Usuario>(
+            
+            _connection.CreateTableIfNotExists<Usuario>();
+            var u = await _connection.SingleAsync<Usuario>(
                 u =>
                     u.Login.ToLower() == login.ToLower());
 
@@ -70,12 +68,12 @@ namespace Devboost.DroneDelivery.Repository.Implementation
 
         public async Task<UsuarioEntity> GetUsuarioByLoginSenha(UsuarioEntity usuario)
         {
-            using var conexao = await _dbFactory.OpenAsync();
-            if (conexao.CreateTableIfNotExists<Usuario>())
+            
+            if (_connection.CreateTableIfNotExists<Usuario>())
             {
-                await conexao.InsertAllAsync(SeedUsuario());
+                await _connection.InsertAllAsync(SeedUsuario());
             }
-            var retornoUsuario = await conexao.SingleAsync<Usuario>(
+            var retornoUsuario = await _connection.SingleAsync<Usuario>(
                 u =>
                     u.Login.ToLower() == usuario.Login.ToLower() && u.Senha == usuario.Senha);
 
@@ -109,6 +107,25 @@ namespace Devboost.DroneDelivery.Repository.Implementation
                     DataCadastro = DateTime.Now
                 },
             };
+        }
+        
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _connection?.Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~UsuariosRepository()
+        {
+            Dispose(false);
         }
     }
 }

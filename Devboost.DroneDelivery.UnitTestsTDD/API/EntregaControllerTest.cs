@@ -54,7 +54,7 @@ namespace Devboost.DroneDelivery.Tests.API
 
             var responseTask = Task.Factory.StartNew(() => response);
 
-            var expectResponse = baseControllerMock.BadRequest("Entrega iniciada!");
+            var expectResponse = baseControllerMock.BadRequest("Erro ao iniciar a Entrega!");
 
             var service = mocker.GetMock<IEntregaCommand>();
             service.Setup(r => r.Inicia()).Returns(responseTask).Verifiable();
@@ -63,9 +63,10 @@ namespace Devboost.DroneDelivery.Tests.API
             var result = await baseControllerMock.IniciaEntrega();
 
             //Then
-            //var comparison = new CompareLogic();
+            var comparison = new CompareLogic();
             service.Verify(mock => mock.Inicia(), Times.Once());
-            Assert.True(((BadRequestResult)result).StatusCode == ((BadRequestObjectResult)expectResponse).StatusCode);
+            var comp = comparison.Compare(result, expectResponse);
+            Assert.True(comp.AreEqual);
         }
 
         [Fact]

@@ -1,4 +1,5 @@
-﻿using Devboost.DroneDelivery.Domain.Interfaces.Commands;
+﻿using System.Data;
+using Devboost.DroneDelivery.Domain.Interfaces.Commands;
 using Devboost.DroneDelivery.Domain.Interfaces.Queries;
 using Devboost.DroneDelivery.Domain.Interfaces.Repository;
 using Devboost.DroneDelivery.Domain.Interfaces.Services;
@@ -8,6 +9,7 @@ using Devboost.DroneDelivery.DomainService.Queries;
 using Devboost.DroneDelivery.Repository.Implementation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ServiceStack.OrmLite;
 
 namespace Devboost.DroneDelivery.IoC
 {
@@ -27,6 +29,14 @@ namespace Devboost.DroneDelivery.IoC
             services.AddScoped<IPedidoQuery, PedidoQuery>();
             services.AddScoped<IUsuarioCommand, UsuarioCommand>();
             services.AddScoped<IUsuarioQuery, UsuarioQuery>();
+            services.AddScoped<IUsuarioQuery, UsuarioQuery>();
+            services.AddTransient( (db) =>
+            {
+                var cn = config.GetConnectionString("DroneDelivery");
+                var connection = new OrmLiteConnectionFactory(cn,
+                    SqlServerDialect.Provider);
+                return connection.OpenDbConnection();
+            });
 
             return services;
         }
