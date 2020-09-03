@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Devboost.DroneDelivery.Repo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Devboost.DroneDelivery.IoC", "Devboost.DroneDelivery.IoC\Devboost.DroneDelivery.IoC.csproj", "{BA14E1AC-3CF9-440E-BBFB-7358497B51B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devboost.DroneDelivery.Tests", "Devboost.DroneDelivery.Tests\Devboost.DroneDelivery.Tests.csproj", "{90043B00-E8D3-4DDB-BFC4-518B6166AC0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Devboost.DroneDelivery.UnitTestsTDD", "Devboost.DroneDelivery.UnitTestsTDD\Devboost.DroneDelivery.UnitTestsTDD.csproj", "{90043B00-E8D3-4DDB-BFC4-518B6166AC0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devboost.DroneDelivery.UnitTestsBDD", "Devboost.DroneDelivery.UnitTestsBDD\Devboost.DroneDelivery.UnitTestsBDD.csproj", "{F02401B8-A70C-4AF3-BF9A-5FAD0A0FE26D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{90043B00-E8D3-4DDB-BFC4-518B6166AC0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90043B00-E8D3-4DDB-BFC4-518B6166AC0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90043B00-E8D3-4DDB-BFC4-518B6166AC0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F02401B8-A70C-4AF3-BF9A-5FAD0A0FE26D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F02401B8-A70C-4AF3-BF9A-5FAD0A0FE26D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F02401B8-A70C-4AF3-BF9A-5FAD0A0FE26D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F02401B8-A70C-4AF3-BF9A-5FAD0A0FE26D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

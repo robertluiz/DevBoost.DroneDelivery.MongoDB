@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Devboost.DroneDelivery.Tests.API
 {
-    public class AuthControllerTest
+    public class DronesRepositoryTests
     {
         [Fact(DisplayName = "GetToken")]
         [Trait("AuthControllerTest", "Controller Tests")]
