@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using Devboost.DroneDelivery.Domain.Entities;
 using Devboost.DroneDelivery.Domain.Enums;
 using Devboost.DroneDelivery.Domain.Interfaces.Repository;
 using Devboost.DroneDelivery.Repository.Models;
-using Microsoft.Extensions.Configuration;
 using ServiceStack;
-using ServiceStack.Data;
 using ServiceStack.OrmLite;
 
 namespace Devboost.DroneDelivery.Repository.Implementation
@@ -86,8 +83,8 @@ namespace Devboost.DroneDelivery.Repository.Implementation
             var model = pedido.ConvertTo<Pedido>();
             
             
-             _connection.CreateTableIfNotExists<Pedido>();
-             await _connection.UpdateAsync(model);
+            _connection.CreateTableIfNotExists<Pedido>();
+            await _connection.UpdateAsync(model);
          
         }
 

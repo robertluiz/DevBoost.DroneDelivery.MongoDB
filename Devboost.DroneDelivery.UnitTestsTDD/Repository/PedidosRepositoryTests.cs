@@ -132,6 +132,34 @@ namespace Devboost.DroneDelivery.UnitTestsTDD.Repository
        
         }
         
+        [Fact(DisplayName = "GetSingleByDroneID")]
+        [Trait("PedidosRepositoryTests", "Repository Tests")]
+        public async Task GetSingleByDroneID_test()
+        {
+            //Given(Preparação)
+            using var dbconnection = await new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider).OpenAsync();
+            var baseRepositoryMock = new PedidosRepository(dbconnection);
+            
+            dbconnection.CreateTableIfNotExists<Pedido>();
+            var param = Guid.NewGuid();
+            var expectresult = new AutoFaker<Pedido>()
+                .RuleFor(fake => fake.DroneId, fake =>param)
+                .RuleFor(fake => fake.Status, fake => PedidoStatus.EmTransito.ToString())
+                .Generate();
+            await dbconnection.InsertAsync(expectresult);
+            
+            //When
+            
+            var result = await baseRepositoryMock.GetSingleByDroneID(param);
+            
+            
+            //Then
+            
+            Assert.True(_comparison.Compare(result.ConvertTo<Pedido>(), expectresult).AreEqual);
+            
+       
+        }
+        
         [Fact(DisplayName = "GetByDroneIDAndStatus")]
         [Trait("PedidosRepositoryTests", "Repository Tests")]
         public async Task GetByDroneIDAndStatus_test()
