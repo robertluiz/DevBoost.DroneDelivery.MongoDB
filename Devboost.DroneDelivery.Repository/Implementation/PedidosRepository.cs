@@ -20,9 +20,7 @@ namespace Devboost.DroneDelivery.Repository.Implementation
 
         public PedidosRepository(IConfiguration config)
         {
-            _dbFactory = new OrmLiteConnectionFactory(
-                config.GetConnectionString(_configConnectionString),  
-                SqlServerDialect.Provider);
+            _dbFactory = new OrmLiteConnectionFactory(config.GetConnectionString(_configConnectionString), SqlServerDialect.Provider);
         }
 
         public async Task<List<PedidoEntity>> GetAll()

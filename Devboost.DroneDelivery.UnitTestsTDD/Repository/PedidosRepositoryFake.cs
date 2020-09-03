@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 namespace Devboost.DroneDelivery.UnitTestsTDD.Repository
 {
     public class PedidosRepositoryFake: IPedidosRepository
-    {
-        private readonly List<PedidoEntity> _pedidos;
+    {        
         private readonly IAutoFaker _autoFaker;
+        private readonly List<PedidoEntity> _pedidos;
 
-        public PedidosRepositoryFake()
+        public PedidosRepositoryFake(List<PedidoEntity> pedidos)
         {
             _autoFaker = AutoFaker.Create();
-            _pedidos = _autoFaker.Generate<List<PedidoEntity>>();
+            _pedidos = pedidos;
         }
 
         public Task Atualizar(PedidoEntity pedido)

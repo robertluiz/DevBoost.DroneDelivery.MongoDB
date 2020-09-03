@@ -1,15 +1,8 @@
 ﻿using AutoBogus;
-using AutoMoqCore;
-using Devboost.DroneDelivery.Api.Controllers;
-using Devboost.DroneDelivery.Domain.DTOs;
 using Devboost.DroneDelivery.Domain.Entities;
 using Devboost.DroneDelivery.Domain.Enums;
 using Devboost.DroneDelivery.Domain.Interfaces.Repository;
-using Devboost.DroneDelivery.Domain.Interfaces.Services;
-using Devboost.DroneDelivery.Domain.Params;
 using Devboost.DroneDelivery.UnitTestsTDD.Repository;
-using KellermanSoftware.CompareNetObjects;
-using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,16 +11,16 @@ using Xunit;
 
 namespace Devboost.DroneDelivery.Tests.Repository
 {
-
     public class PedidoRepositoryTests
     {
         private readonly IAutoFaker _autoFaker;
         private readonly IPedidosRepository _repositoryPedido;
+        private readonly List<PedidoEntity> _pedidos;
 
         public PedidoRepositoryTests()
         {
-            _autoFaker = AutoFaker.Create();
-            _repositoryPedido = new PedidosRepositoryFake();
+            _pedidos = new AutoFaker<PedidoEntity>().RuleFor(fake => fake.Status, fake => PedidoStatus.EmTransito.ToString()).Generate(5);
+            _repositoryPedido = new PedidosRepositoryFake(_pedidos);
         }
 
         [Fact(DisplayName = "PedidoAtualizar")]
@@ -52,7 +45,7 @@ namespace Devboost.DroneDelivery.Tests.Repository
         [Trait("PedidoRepositoryTests", "Repository Pedido Tests")]
         public void GetByDroneID()
         {
-            var id = _autoFaker.Generate<Guid>();
+            var id = _pedidos.FirstOrDefault().DroneId;
 
             var result = _repositoryPedido.GetByDroneID(id);
 
@@ -63,9 +56,9 @@ namespace Devboost.DroneDelivery.Tests.Repository
         [Trait("PedidoRepositoryTests", "Repository Pedido Tests")]
         public void GetByDroneIDAndStatus()
         {
-
-            var id = _autoFaker.Generate<Guid>();
-            var status = _autoFaker.Generate<PedidoStatus>();
+            var pedido = _pedidos.FirstOrDefault();
+            var id = pedido.DroneId;
+            var status = (PedidoStatus)Enum.Parse(typeof(PedidoStatus), pedido.Status, true);
 
             var result = _repositoryPedido.GetByDroneIDAndStatus(id, status);
 
@@ -77,7 +70,7 @@ namespace Devboost.DroneDelivery.Tests.Repository
         [Trait("PedidoRepositoryTests", "Repository Pedido Tests")]
         public void GetSingleByDroneID()
         {
-            var id = _autoFaker.Generate<Guid>();
+            var id = _pedidos.FirstOrDefault().DroneId;
 
             var result = _repositoryPedido.GetSingleByDroneID(id);
 
