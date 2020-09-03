@@ -93,21 +93,25 @@ namespace Devboost.DroneDelivery.DomainService.Commands
         private async Task AtualizaStatusDrones(DroneEntity drone)
         {
             drone.DataAtualizacao ??= DateTime.Now;
-            var total = (drone.DataAtualizacao - DateTime.Now).Value.TotalMinutes;
+            var total = (DateTime.Now - drone.DataAtualizacao ).Value.TotalMinutes;
 
             switch (drone.Status)
             {
                 case DroneStatus.Pronto:
                     break;
                 case DroneStatus.EmTransito:
-                    var pedido = await _pedidosRepository.GetSingleByDroneID(drone.Id);
+                    var pedidos = await _pedidosRepository.GetByDroneID(drone.Id);
                     if (total > drone.AUTONOMIA_RECARGA)
                     {
                         drone.Status = DroneStatus.Pronto;
                         drone.DataAtualizacao = DateTime.Now;
                         await _dronesRepository.Atualizar(drone);
-                        pedido.Status = PedidoStatus.Entregue.ToString();
-                        await _pedidosRepository.Atualizar(pedido);
+                        foreach (var pedido in pedidos)
+                        {
+                            pedido.Status = PedidoStatus.Entregue.ToString();
+                            await _pedidosRepository.Atualizar(pedido);
+                        }
+
                     }
 
                     if (total > drone.AUTONOMIA_MAXIMA)
@@ -115,8 +119,11 @@ namespace Devboost.DroneDelivery.DomainService.Commands
                         drone.Status = DroneStatus.Carregando;
                         drone.DataAtualizacao = DateTime.Now;
                         await _dronesRepository.Atualizar(drone);
-                        pedido.Status = PedidoStatus.Entregue.ToString();
-                        await _pedidosRepository.Atualizar(pedido);
+                        foreach (var pedido in pedidos)
+                        {
+                            pedido.Status = PedidoStatus.Entregue.ToString();
+                            await _pedidosRepository.Atualizar(pedido);
+                        }
                     }
 
                     break;
