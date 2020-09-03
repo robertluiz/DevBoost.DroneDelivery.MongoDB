@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Service\" />
+    <Folder Include="Repository\" />
   </ItemGroup>
 
   <ItemGroup>
