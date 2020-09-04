@@ -19,7 +19,7 @@ namespace Devboost.DroneDelivery.UnitTestsBDD
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.4.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class NaCriacaoDoPedidoSelecionarODroneFeature : object, Xunit.IClassFixture<NaCriacaoDoPedidoSelecionarODroneFeature.FixtureData>, System.IDisposable
+    public partial class CriandoOUsuarioFeature : object, Xunit.IClassFixture<CriandoOUsuarioFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Devboost.DroneDelivery.UnitTestsBDD
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "SelecionarDrone.feature"
+#line 1 "CriarUsuario.feature"
 #line hidden
         
-        public NaCriacaoDoPedidoSelecionarODroneFeature(NaCriacaoDoPedidoSelecionarODroneFeature.FixtureData fixtureData, Devboost_DroneDelivery_UnitTestsBDD_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public CriandoOUsuarioFeature(CriandoOUsuarioFeature.FixtureData fixtureData, Devboost_DroneDelivery_UnitTestsBDD_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,9 +40,7 @@ namespace Devboost.DroneDelivery.UnitTestsBDD
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("pt-BR"), "", "Na criação do pedido selecionar o drone", "\t\t\t\tque esteja com disponibilidade, capacidade e autonômia suficiente\r\n\t\t\t\tcom ba" +
-                    "se nos parâmetros de entrada do pedido\r\n\t\t\t\ttais como peso e distância de entreg" +
-                    "a do comprador", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("pt-BR"), "", "Criando o usuário", "\tNa criação do usuário \r\n\té necessário passar \r\n\tLogin e Senha", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -82,17 +80,14 @@ namespace Devboost.DroneDelivery.UnitTestsBDD
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Na criação do pedido selecionar o drone com base na sua disponibilidade, capacida" +
-            "de e autonômia")]
-        [Xunit.TraitAttribute("FeatureTitle", "Na criação do pedido selecionar o drone")]
-        [Xunit.TraitAttribute("Description", "Na criação do pedido selecionar o drone com base na sua disponibilidade, capacida" +
-            "de e autonômia")]
-        public virtual void NaCriacaoDoPedidoSelecionarODroneComBaseNaSuaDisponibilidadeCapacidadeEAutonomia()
+        [Xunit.SkippableFactAttribute(DisplayName="Será passado dados do usuário tais como")]
+        [Xunit.TraitAttribute("FeatureTitle", "Criando o usuário")]
+        [Xunit.TraitAttribute("Description", "Será passado dados do usuário tais como")]
+        public virtual void SeraPassadoDadosDoUsuarioTaisComo()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Na criação do pedido selecionar o drone com base na sua disponibilidade, capacida" +
-                    "de e autonômia", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Será passado dados do usuário tais como", null, tagsOfScenario, argumentsOfScenario);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -114,17 +109,16 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 7
- testRunner.Given("um pedido com peso total de 8000 gramas", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+ testRunner.Given("o usuário fulanoAlmeida", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 8
- testRunner.And("com destino de entrega com distância prevista para 3.500 metros", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+ testRunner.And("senha 123456ABC", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 9
- testRunner.When("o pedido for inserido o drone selecionado deverá ao final corresponder aos critér" +
-                        "ios definidos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+ testRunner.When("inserido o usuário", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 10
- testRunner.Then("se o pedido foi inserido corretamente a seleção do drone deve ser True", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+ testRunner.Then("se for cadastrado com sucesso o resultado será True", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -137,12 +131,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                NaCriacaoDoPedidoSelecionarODroneFeature.FeatureSetup();
+                CriandoOUsuarioFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                NaCriacaoDoPedidoSelecionarODroneFeature.FeatureTearDown();
+                CriandoOUsuarioFeature.FeatureTearDown();
             }
         }
     }

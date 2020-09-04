@@ -6,9 +6,7 @@ using Devboost.DroneDelivery.Domain.Entities;
 using Devboost.DroneDelivery.Domain.Enums;
 using Devboost.DroneDelivery.Domain.Interfaces.Repository;
 using Devboost.DroneDelivery.Repository.Models;
-using Microsoft.Extensions.Configuration;
 using ServiceStack;
-using ServiceStack.Data;
 using ServiceStack.OrmLite;
 
 namespace Devboost.DroneDelivery.Repository.Implementation
