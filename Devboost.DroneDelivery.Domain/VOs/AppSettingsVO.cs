@@ -1,5 +1,8 @@
-﻿namespace Devboost.DroneDelivery.Domain.VOs
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Devboost.DroneDelivery.Domain.VOs
 {
+    [ExcludeFromCodeCoverage]
     public class AppSettingsVO
     {
         public string TokenLimitMinutesExpire { get; set; }
