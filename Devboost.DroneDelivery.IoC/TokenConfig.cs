@@ -4,10 +4,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Devboost.DroneDelivery.IoC
 {
+    [ExcludeFromCodeCoverage]
     public static class TokenConfig
     {
         public static IServiceCollection AddTokenConfiguration(this IServiceCollection services,

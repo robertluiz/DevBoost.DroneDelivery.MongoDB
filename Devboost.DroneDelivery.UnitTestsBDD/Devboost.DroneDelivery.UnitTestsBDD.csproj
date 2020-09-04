@@ -6,10 +6,19 @@
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
+	<ItemDefinitionGroup>
+		<PackageReference>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<ProjectReference>
+			<PrivateAssets>all</PrivateAssets>
+		</ProjectReference>
+	</ItemDefinitionGroup>
+
 	<ItemGroup>
 		<PackageReference Include="AutoBogus" Version="2.10.0" />
 		<PackageReference Include="GeoCoordinate.NetCore" Version="1.0.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.7" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.7" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.7" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
 		<PackageReference Include="ServiceStack.OrmLite.SqlServer.Core" Version="5.9.2" />
@@ -25,13 +34,11 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="coverlet.collector" Version="1.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Devboost.DroneDelivery.DomainService\Devboost.DroneDelivery.DomainService.csproj" />
 		<ProjectReference Include="..\Devboost.DroneDelivery.Domain\Devboost.DroneDelivery.Domain.csproj" />
-		<ProjectReference Include="..\Devboost.DroneDelivery.IoC\Devboost.DroneDelivery.IoC.csproj" />
 		<ProjectReference Include="..\Devboost.DroneDelivery.Repository\Devboost.DroneDelivery.Repository.csproj" />
 	</ItemGroup>
 

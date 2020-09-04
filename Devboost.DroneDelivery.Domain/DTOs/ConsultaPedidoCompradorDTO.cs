@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Devboost.DroneDelivery.Domain.DTOs
 {
+    [ExcludeFromCodeCoverage]
     public class ConsultaPedidoCompradorDTO
     {
         public Guid PedidoId { get; set; }

@@ -9,9 +9,11 @@ using Devboost.DroneDelivery.Repository.Implementation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceStack.OrmLite;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Devboost.DroneDelivery.IoC
 {
+    [ExcludeFromCodeCoverage]
     public static class DependencyInjectionConfig
     {
         public static IServiceCollection ResolveDependencies(this IServiceCollection services, IConfiguration config)

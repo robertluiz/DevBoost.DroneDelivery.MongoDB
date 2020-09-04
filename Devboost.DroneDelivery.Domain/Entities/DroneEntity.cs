@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Devboost.DroneDelivery.Domain.Enums;
 
 namespace Devboost.DroneDelivery.Domain.Entities
 {
+    [ExcludeFromCodeCoverage]
     public class DroneEntity
     {
         public Guid Id { get; set; }

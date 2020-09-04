@@ -19,7 +19,7 @@ namespace Devboost.DroneDelivery.Tests.Service.Commands
     {
         [Fact(DisplayName = "LiberaDrone")]
         [Trait("DroneCommand", "Command Tests")]
-        public async void LiberaDrone_Test()
+        public async Task LiberaDrone_Test()
         {
             var mocker = new AutoMoqer();
             var baseCommandMock = mocker.Create<DroneCommand>();
@@ -84,7 +84,7 @@ namespace Devboost.DroneDelivery.Tests.Service.Commands
 
         [Fact(DisplayName = "SelecionarDrone")]
         [Trait("DroneCommand", "Command Tests")]
-        public async void SelecionarDrone_Test()
+        public async Task SelecionarDrone_Test()
         {
             var mocker = new AutoMoqer();
             var baseCommandMock = mocker.Create<DroneCommand>();
@@ -164,7 +164,8 @@ namespace Devboost.DroneDelivery.Tests.Service.Commands
 
             //Then
             var comparison = new CompareLogic();
-            droneRepoMock.Verify(mock => mock.GetAll(), Times.Once()); droneRepoMock.Verify(mock => mock.Atualizar(It.IsAny<DroneEntity>()), Times.Exactly(3));
+            droneRepoMock.Verify(mock => mock.GetAll(), Times.Once());
+            droneRepoMock.Verify(mock => mock.Atualizar(It.IsAny<DroneEntity>()), Times.Exactly(3));
             
             pedidosRepoMock.Verify(mock => mock.Atualizar(It.IsAny<PedidoEntity>()), Times.Exactly(2));
             pedidosRepoMock.Verify(mock => mock.GetByDroneID(responseDroneRepo[0].Id), Times.Once());
