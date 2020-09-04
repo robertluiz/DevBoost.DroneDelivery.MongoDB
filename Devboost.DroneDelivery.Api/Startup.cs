@@ -20,7 +20,6 @@ namespace Devboost.DroneDelivery.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
             services.Configure<AppSettingsVO>(Configuration.GetSection("TokenSettings"));
             services.AddControllers();
             services.AddTokenConfiguration(Configuration);
@@ -42,7 +41,7 @@ namespace Devboost.DroneDelivery.Api
             }
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
