@@ -8,14 +8,17 @@ using Devboost.DroneDelivery.DomainService.Queries;
 using Devboost.DroneDelivery.Repository.Implementation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ServiceStack.OrmLite;
+using System;
+using System.Data;
 
-namespace Devboost.DroneDelivery.IoC
+namespace Devboost.DroneDelivery.UnitTestsBDD
 {
-    public static class DependencyInjectionConfig
+    public class DepedencyInjectionTests
     {
-        public static IServiceCollection ResolveDependencies(this IServiceCollection services, IConfiguration config)
+        public static IServiceProvider BuildServicesProvider(IConfiguration config, IDbConnection dbConnection)
         {
+            var services = new ServiceCollection();
+
             services.AddSingleton(config);
             services.AddScoped<IDronesRepository, DronesRepository>();
             services.AddScoped<IPedidosRepository, PedidosRepository>();
@@ -27,16 +30,13 @@ namespace Devboost.DroneDelivery.IoC
             services.AddScoped<IPedidoCommand, PedidoCommand>();
             services.AddScoped<IPedidoQuery, PedidoQuery>();
             services.AddScoped<IUsuarioCommand, UsuarioCommand>();
-            services.AddScoped<IUsuarioQuery, UsuarioQuery>();            
-            services.AddTransient( (db) =>
-           {
-                var cn = config.GetConnectionString("DroneDelivery");
-                var connection = new OrmLiteConnectionFactory(cn,
-                    SqlServerDialect.Provider);
-                return connection.OpenDbConnection();
-           });
+            services.AddScoped<IUsuarioQuery, UsuarioQuery>();
+            services.AddTransient((db) =>
+            {
+                return dbConnection;
+            });
 
-            return services;
+            return services.BuildServiceProvider();
         }
     }
 }
