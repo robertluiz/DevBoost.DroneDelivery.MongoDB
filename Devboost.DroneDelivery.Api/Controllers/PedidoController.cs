@@ -21,7 +21,7 @@ namespace Devboost.DroneDelivery.Api.Controllers
         {
             _pedidoCommand = pedidoCommand;
             _pedidoQuery = pedidoQuery;
-            _login = login ?? User.Identity.Name;
+            _login = login ?? (User != null ? User.Identity.Name : null);
         }
 
         [HttpPost("cadastrar")]
@@ -30,7 +30,7 @@ namespace Devboost.DroneDelivery.Api.Controllers
         {
             try
             {
-                pedido.Login = _login;
+                pedido.Login = User.Identity.Name;
 
                 var resultado = await _pedidoCommand.InserirPedido(pedido);
                 if (!resultado)
