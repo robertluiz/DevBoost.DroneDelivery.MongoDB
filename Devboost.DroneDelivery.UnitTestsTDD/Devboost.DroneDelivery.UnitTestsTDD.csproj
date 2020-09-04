@@ -11,6 +11,7 @@
     <PackageReference Include="AutoMoqCore" Version="1.0.0" />
     <PackageReference Include="Bogus" Version="30.0.4" />
     <PackageReference Include="CompareNETObjects" Version="4.66.0" />
+    <PackageReference Include="GeoCoordinate.NetCore" Version="1.0.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="ServiceStack.OrmLite" Version="5.9.2" />
     <PackageReference Include="ServiceStack.OrmLite.Sqlite" Version="5.9.2" />
