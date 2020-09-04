@@ -11,7 +11,7 @@ using ServiceStack.OrmLite;
 
 namespace Devboost.DroneDelivery.Repository.Implementation
 {
-    public class UsuariosRepository : IUsuariosRepository, IDisposable
+    public class UsuariosRepository : IUsuariosRepository
     {
         private readonly IDbConnection _connection;
 
@@ -107,23 +107,6 @@ namespace Devboost.DroneDelivery.Repository.Implementation
             };
         }
         
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _connection?.Dispose();
-            }
-        }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        ~UsuariosRepository()
-        {
-            Dispose(false);
-        }
     }
 }

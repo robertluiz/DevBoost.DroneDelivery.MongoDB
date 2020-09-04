@@ -76,7 +76,7 @@ namespace Devboost.DroneDelivery.UnitTestsTDD.Repository
         
         [Fact(DisplayName = "GetSingleById")]
         [Trait("UsuariosRepositoryTests", "Repository Tests")]
-        public async Task GetSingleByDroneID_test()
+        public async Task GetSingleById_test()
         {
             //Given(Preparação)
             using var dbconnection = await new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider).OpenAsync();
@@ -92,6 +92,33 @@ namespace Devboost.DroneDelivery.UnitTestsTDD.Repository
             //When
             
             var result = await baseRepositoryMock.GetSingleById(param);
+            
+            
+            //Then
+            
+            Assert.True(_comparison.Compare(result.ConvertTo<Usuario>(), expectresult).AreEqual);
+            
+       
+        }
+        
+        [Fact(DisplayName = "GetSingleByLogin")]
+        [Trait("UsuariosRepositoryTests", "Repository Tests")]
+        public async Task GetSingleByLogin_test()
+        {
+            //Given(Preparação)
+            using var dbconnection = await new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider).OpenAsync();
+            var baseRepositoryMock = new UsuariosRepository(dbconnection);
+            
+            dbconnection.CreateTableIfNotExists<Usuario>();
+            var param = "fulano";
+            var expectresult = new AutoFaker<Usuario>()
+                .RuleFor(fake => fake.Login, fake =>param)
+                .Generate();
+            await dbconnection.InsertAsync(expectresult);
+            
+            //When
+            
+            var result = await baseRepositoryMock.GetSingleByLogin(param);
             
             
             //Then
