@@ -9,8 +9,8 @@
 	<ItemGroup>
 		<PackageReference Include="AutoBogus" Version="2.10.0" />
 		<PackageReference Include="GeoCoordinate.NetCore" Version="1.0.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0-preview.8.20407.11" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0-preview.8.20407.11" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.7" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.7" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
 		<PackageReference Include="ServiceStack.OrmLite.SqlServer.Core" Version="5.9.2" />
 		<PackageReference Include="SpecFlow" Version="3.4.3" />
