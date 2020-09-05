@@ -13,4 +13,11 @@
 		</ProjectReference>
 	</ItemDefinitionGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Devboost.Pagamentos.Domain\Devboost.Pagamentos.Domain.csproj" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.7" />
+      <PackageReference Include="ServiceStack.OrmLite.SqlServer" Version="5.9.2" />
+      <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+	</ItemGroup>
+
 </Project>
