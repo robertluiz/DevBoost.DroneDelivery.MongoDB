@@ -2,6 +2,7 @@
 using Devboost.Pagamentos.DomainService.Commands;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ServiceStack.OrmLite;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Devboost.Pagamentos.IoC
@@ -13,13 +14,13 @@ namespace Devboost.Pagamentos.IoC
         {
             services.AddSingleton(config);
             services.AddScoped<IPagamentoCommand, PagamentoCommand>();
-            //services.AddTransient((db) =>
-            //{
-            //    var cn = config.GetConnectionString("DroneDelivery");
-            //    var connection = new OrmLiteConnectionFactory(cn,
-            //        SqlServerDialect.Provider);
-            //    return connection.OpenDbConnection();
-            //});
+            services.AddTransient((db) =>
+            {
+                var cn = config.GetConnectionString("DroneDelivery");
+                var connection = new OrmLiteConnectionFactory(cn,
+                    SqlServerDialect.Provider);
+                return connection.OpenDbConnection();
+            });
 
             return services;
         }
