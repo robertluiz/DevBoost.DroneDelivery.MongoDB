@@ -13,6 +13,6 @@ namespace Devboost.DroneDelivery.Domain.Params
         //[Required]
         //public double Longitude { get; set; }
         [Required]
-        public DateTime DataHora { get; set; }
+        public DateTime DataHora { get; set; }        
     }
 }
