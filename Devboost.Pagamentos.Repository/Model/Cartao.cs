@@ -6,6 +6,11 @@ namespace Devboost.Pagamentos.Repository.Model
 {
 	public class Cartao
 	{
+		public Cartao() 
+		{
+			Id = Guid.NewGuid();
+		}
+		public Guid Id { get; set; }
 		public string Bandeira { get; set; }
 		public string NumeroCartao { get; set; }
 		public DateTime DataValidade { get; set; }

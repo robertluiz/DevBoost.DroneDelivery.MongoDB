@@ -11,16 +11,23 @@ namespace Devboost.Pagamentos.DomainService.Commands
     public class PagamentoCommand: IPagamentoCommand
     {
         private readonly IPagamentoRepository _pagamentoRepository;
+
         public PagamentoCommand(IPagamentoRepository pagamentoRepository)
         {
             _pagamentoRepository = pagamentoRepository;
         }
 
-        public async Task ProcessarPagamento(CartaoParam cartao)
+        public async Task<string[]> ProcessarPagamento(CartaoParam cartao)
         {
             var pagamento = cartao.ConvertTo<PagamentoEntity>();
 
+            string[] erros = pagamento.Validar();
+
+            if (erros.Length > 0) return erros;
+
             await _pagamentoRepository.Add(pagamento);
+
+            return erros;
         }
     }
 }
