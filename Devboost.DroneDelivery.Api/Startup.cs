@@ -37,6 +37,7 @@ namespace Devboost.DroneDelivery.Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "DevBoost Drone Delivery");
             });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
