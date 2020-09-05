@@ -10,5 +10,6 @@ namespace Devboost.Pagamentos.Domain.Interfaces.Repository
 	{
 		Task Inserir(PagamentoEntity pagamento);
 		Task<PagamentoEntity> RetornoPagamento(Guid idPedido);
+		Task Atualizar(PagamentoEntity pagamento);
 	}
 }
