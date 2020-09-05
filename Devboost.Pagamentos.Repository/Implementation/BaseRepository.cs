@@ -9,7 +9,7 @@ using Devboost.Pagamentos.Domain.Interfaces.Repository;
 
 namespace Devboost.Pagamentos.Repository.Implementation
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class
+    public class BaseRepository<TEntity,TModel> : IBaseRepository<TEntity> where TEntity : class
     {
         private readonly IDbConnection _connection;
 
@@ -18,39 +18,46 @@ namespace Devboost.Pagamentos.Repository.Implementation
             _connection = connection;
         }
 
-        public async Task Add(T obj)
+        public async Task Add(TEntity obj)
         {
-            var model = obj.ConvertTo<Pagamento>();
+            var model = obj.ConvertTo<TModel>();
 
-            _connection.CreateTableIfNotExists<Pagamento>();
+            _connection.CreateTableIfNotExists<TModel>();            
             await _connection.InsertAsync(model);
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public async Task AddUsingRef(TEntity obj)
         {
-            _connection.CreateTableIfNotExists<Pagamento>();
+            var model = obj.ConvertTo<TModel>();
 
-            var list = await _connection.SelectAsync<Pagamento>();
-
-            return list.ConvertTo<List<T>>();
+            _connection.CreateTableIfNotExists<TModel>();
+            await _connection.SaveAsync(model, references: true);            
         }
 
-        public async Task<T> GetByID(Guid id)
+        public async Task<IEnumerable<TEntity>> GetAll()
         {
-            _connection.CreateTableIfNotExists<Pagamento>();
-            var p = await _connection.SingleAsync<Pagamento>(s => s.Id == id);
+            _connection.CreateTableIfNotExists<TModel>();
 
-            return p.ConvertTo<T>();
+            var list = await _connection.SelectAsync<TModel>();
+
+            return list.ConvertTo<List<TEntity>>();
         }
 
-        public async Task Remove(T obj)
+        public async Task<TEntity> GetByID(Guid id)
         {
-            throw new NotImplementedException();
+            _connection.CreateTableIfNotExists<TModel>();           
+
+            var p = await _connection.SingleAsync<TModel>(new { Id = id });
+
+            return p.ConvertTo<TEntity>();
         }
 
-        public async Task Update(T obj)
+        public async Task Update(TEntity obj)
         {
-            throw new NotImplementedException();
+            var model = obj.ConvertTo<TModel>();
+
+            _connection.CreateTableIfNotExists<TModel>();
+            await _connection.UpdateAsync(model);
         }
     }
 }
