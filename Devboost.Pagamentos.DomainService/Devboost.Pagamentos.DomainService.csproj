@@ -4,4 +4,25 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+	<ItemDefinitionGroup>
+		<PackageReference>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<ProjectReference>
+			<PrivateAssets>all</PrivateAssets>
+		</ProjectReference>
+	</ItemDefinitionGroup>
+	
+  <ItemGroup>
+    <Folder Include="Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ServiceStack.Text" Version="5.9.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Devboost.Pagamentos.Domain\Devboost.Pagamentos.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
