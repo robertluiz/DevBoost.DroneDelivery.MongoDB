@@ -1,14 +1,14 @@
-﻿using System;
-//using System.ComponentModel.DataAnnotations;
+﻿using Devboost.Pagamentos.Domain.Interfaces.Commands;
+using Devboost.Pagamentos.Domain.Params;
+using System.Threading.Tasks;
 
 namespace Devboost.Pagamentos.DomainService.Commands
 {
-    public class PagamentoCommand
+    public class PagamentoCommand : IPagamentoCommand
     {
-        //[Required]
-        public Guid IdPedido { get; set; }
-        //[Required]
-        public float Valor { get; set; }
-
+        public Task ProcessarPagamento(PagamentoParam p)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
