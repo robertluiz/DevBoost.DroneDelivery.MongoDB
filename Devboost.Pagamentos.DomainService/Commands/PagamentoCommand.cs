@@ -29,11 +29,15 @@ namespace Devboost.Pagamentos.DomainService.Commands
 
             if (erros.Length > 0) return erros;
 
+<<<<<<< HEAD
             await _pagamentoRepository.Inserir(pagamento);
             
             var confirmacaoPagamento = await _gatewayService.EfetuaPagamento(pagamento);
             await _deliveryService.SinalizaStatusPagamento(confirmacaoPagamento);
 
+=======
+            await _pagamentoRepository.Add(pagamento);
+>>>>>>> 3f519954827e8b1067897486e6ba18adc33f8e5c
 
             return erros;
         }
