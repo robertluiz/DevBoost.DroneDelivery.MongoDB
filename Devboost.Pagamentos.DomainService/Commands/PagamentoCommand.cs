@@ -31,7 +31,7 @@ namespace Devboost.Pagamentos.DomainService.Commands
             if (erros.Length > 0) return erros;
 
             pagamento.StatusPagamento = StatusPagamentoEnum.Pendente;
-            await _pagamentoRepository.Add(pagamento);
+            await _pagamentoRepository.AddUsingRef(pagamento);
 
             var confirmacaoPagamento = await _gatewayService.EfetuaPagamento(pagamento);
             await _deliveryService.SinalizaStatusPagamento(confirmacaoPagamento);
