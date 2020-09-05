@@ -1,4 +1,4 @@
-﻿using Devboost.Pagamentos.Domain.DTOs;
+using Devboost.Pagamentos.Domain.DTOs;
 using Devboost.Pagamentos.Domain.Interfaces.External;
 using System.Threading.Tasks;
 

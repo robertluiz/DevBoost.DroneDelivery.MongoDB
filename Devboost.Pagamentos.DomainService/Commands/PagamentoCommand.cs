@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Devboost.Pagamentos.Domain.Entities;
+using Devboost.Pagamentos.Domain.Enums;
 using Devboost.Pagamentos.Domain.Interfaces.Commands;
 using Devboost.Pagamentos.Domain.Interfaces.External;
 using Devboost.Pagamentos.Domain.Interfaces.Repository;
@@ -29,11 +30,14 @@ namespace Devboost.Pagamentos.DomainService.Commands
 
             if (erros.Length > 0) return erros;
 
-            await _pagamentoRepository.Add(pagamento);
-            
+            pagamento.StatusPagamento = StatusPagamentoEnum.Pendente;
+            await _pagamentoRepository.AddUsingRef(pagamento);
+
             var confirmacaoPagamento = await _gatewayService.EfetuaPagamento(pagamento);
             await _deliveryService.SinalizaStatusPagamento(confirmacaoPagamento);
-
+            
+            pagamento.StatusPagamento = confirmacaoPagamento.StatusPagamento;
+            await _pagamentoRepository.Update(pagamento);
 
             return erros;
         }
