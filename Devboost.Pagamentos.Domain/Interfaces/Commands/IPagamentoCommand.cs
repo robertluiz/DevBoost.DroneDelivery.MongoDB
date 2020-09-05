@@ -5,6 +5,6 @@ namespace Devboost.Pagamentos.Domain.Interfaces.Commands
 {
     public interface IPagamentoCommand
     {
-        Task ProcessarPagamento(PagamentoParam p);
+        Task ProcessarPagamento(CartaoParam cartao);
     }
 }
