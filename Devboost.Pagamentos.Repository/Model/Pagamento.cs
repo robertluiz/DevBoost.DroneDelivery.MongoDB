@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using Devboost.Pagamentos.Domain.Enums;
 
 namespace Devboost.Pagamentos.Repository.Model
 {
@@ -15,6 +16,7 @@ namespace Devboost.Pagamentos.Repository.Model
 		}
 		public Guid Id { get; set; }
 		public Guid IdPedido { get; set; }
+        public StatusPagamentoEnum StatusPagamento { get; set; }
 		public float Valor { get; set; }
 
 		[References(typeof(FormaPagamento))]
