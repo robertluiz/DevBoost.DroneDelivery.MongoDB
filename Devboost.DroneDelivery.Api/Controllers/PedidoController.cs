@@ -30,7 +30,8 @@ namespace Devboost.DroneDelivery.Api.Controllers
         {
             try
             {
-                pedido.Login = User.Identity.Name;
+                if(string.IsNullOrEmpty(pedido.Login))
+                    pedido.Login = User.Identity.Name;
 
                 var resultado = await _pedidoCommand.InserirPedido(pedido);
                 if (!resultado)
