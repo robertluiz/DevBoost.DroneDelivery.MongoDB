@@ -14,7 +14,14 @@ namespace Devboost.Pagamentos.DomainService.Commands
     {
         public PagamentoCommand()
         {
-           
+            AutoMapping.RegisterConverter((CartaoParam from) => {
+                var to = from.ConvertTo<PagamentoEntity>(skipConverters: true);
+                to.FormaPagamento = new FormaPagamentoEntity
+                {
+                    Cartao = from.ConvertTo<CartaoEntity>(skipConverters: true)
+                };
+                return to;
+            });
         }
         public async Task ProcessarPagamento(CartaoParam cartao)
         {
