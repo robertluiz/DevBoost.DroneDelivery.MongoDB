@@ -21,6 +21,7 @@ namespace Devboost.Pagamentos.Api
         {
             services.AddControllers();
             services.AddSwaggerGen();
+            services.ResolveConverters();
             services.ResolveDependencies(Configuration);
         }
 
@@ -31,7 +32,7 @@ namespace Devboost.Pagamentos.Api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "DevBoost Drone Delivery");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "DevBoost Pagamentos");
             });
 
             if (env.IsDevelopment())
