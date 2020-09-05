@@ -1,7 +1,10 @@
-﻿namespace Devboost.Pagamentos.Domain.Interfaces.Commands
+﻿using System.Threading.Tasks;
+using Devboost.Pagamentos.Domain.Params;
+
+namespace Devboost.Pagamentos.Domain.Interfaces.Commands
 {
     public interface IPagamentoCommand
     {
-        void ProcessarPagamento();
+        Task ProcessarPagamento(CartaoParam cartao);
     }
 }
