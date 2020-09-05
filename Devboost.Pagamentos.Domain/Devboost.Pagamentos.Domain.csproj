@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <Folder Include="DTOs\" />
-    <Folder Include="Interfaces\" />
+    <Folder Include="Interfaces\Queries\" />
   </ItemGroup>
 
 </Project>
