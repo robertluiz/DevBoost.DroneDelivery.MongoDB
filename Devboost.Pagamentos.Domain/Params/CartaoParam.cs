@@ -3,7 +3,7 @@ using System;
 
 namespace Devboost.Pagamentos.Domain.Params
 {
-    public class CartaoParam
+    public class CartaoParam : PagamentoParam
     {
         public PagamentoBandeiraEnum Bandeira { get; set; }
         public string NumeroCartao { get; set; }

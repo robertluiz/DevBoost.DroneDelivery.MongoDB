@@ -9,7 +9,5 @@ namespace Devboost.Pagamentos.Domain.Params
         public Guid IdPedido { get; set; }
         [Required]
         public float Valor { get; set; }
-        public CartaoParam DadosCartao { get; set; }
-        public BoletoParam DadosBoleto { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace Devboost.Pagamentos.Api.Controllers
     {
         
         [HttpPost("cartao")]
-        public void Post([FromBody] PagamentoParam pagamento)
+        public void Post([FromBody] CartaoParam cartao)
         {
 
         }

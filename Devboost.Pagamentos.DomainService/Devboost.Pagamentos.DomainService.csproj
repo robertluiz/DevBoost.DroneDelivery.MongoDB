@@ -4,12 +4,17 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+	<ItemDefinitionGroup>
+		<PackageReference>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<ProjectReference>
+			<PrivateAssets>all</PrivateAssets>
+		</ProjectReference>
+	</ItemDefinitionGroup>
+	
   <ItemGroup>
     <Folder Include="Queries\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
