@@ -4,18 +4,16 @@ using System.Threading.Tasks;
 
 namespace Devboost.Pagamentos.Domain.Interfaces.Repository
 {
-    public interface IBaseRepository<T>
+    public interface IBaseRepository<TEntity>
     {
-        Task Add(T obj);
+        Task Add(TEntity obj);
+        Task AddUsingRef(TEntity obj);
 
-        Task<IEnumerable<T>> GetAll();
+        Task<IEnumerable<TEntity>> GetAll();
 
-        Task<T> GetByID(Guid id);
+        Task<TEntity> GetByID(Guid id);
 
-
-        Task Remove(T obj);
-
-        Task Update(T obj);
+        Task Update(TEntity obj);
         
     }
 }

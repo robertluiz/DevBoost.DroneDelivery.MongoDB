@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Devboost.Pagamentos.Repository.Implementation
 {
-    public class PagamentoRepository : BaseRepository<PagamentoEntity>, IPagamentoRepository
+    public class PagamentoRepository : BaseRepository<PagamentoEntity, Pagamento>, IPagamentoRepository
     {
         private readonly IDbConnection _connection;
 
@@ -18,7 +18,7 @@ namespace Devboost.Pagamentos.Repository.Implementation
             _connection = connection;
         }
 
-        public async Task<PagamentoEntity> RetornoPagamento(Guid idPedido)
+        public async Task<PagamentoEntity> GetPagamentoByIdPedido(Guid idPedido)
         {
             _connection.CreateTableIfNotExists<Pagamento>();
             var u = await _connection.SingleAsync<Pagamento>(
