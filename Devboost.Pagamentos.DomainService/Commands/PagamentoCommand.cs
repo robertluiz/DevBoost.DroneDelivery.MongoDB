@@ -20,7 +20,7 @@ namespace Devboost.Pagamentos.DomainService.Commands
         {
             var pagamento = cartao.ConvertTo<PagamentoEntity>();
 
-            await _pagamentoRepository.Inserir(pagamento);
+            await _pagamentoRepository.Add(pagamento);
         }
     }
 }

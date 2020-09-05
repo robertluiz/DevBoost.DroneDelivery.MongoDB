@@ -1,20 +1,18 @@
 ﻿using Devboost.Pagamentos.Domain.Entities;
 using Devboost.Pagamentos.Domain.Interfaces.Repository;
 using System;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace Devboost.Pagamentos.Repository.Implementation
 {
-    public class PagamentoRepository : IPagamentoRepository
+    public class PagamentoRepository : BaseRepository<PagamentoEntity>, IPagamentoRepository
     {
-        public Task Inserir(PagamentoEntity pagamento)
-        {
-            throw new NotImplementedException();
-        }
+        private readonly IDbConnection _connection;
 
-        public Task<PagamentoEntity> RetornoPagamento(Guid idPedido)
+        public PagamentoRepository(IDbConnection connection) : base(connection)
         {
-            throw new NotImplementedException();
-        }
+            _connection = connection;
+        }        
     }
 }
