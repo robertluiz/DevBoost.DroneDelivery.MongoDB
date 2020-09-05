@@ -4,4 +4,23 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+	<ItemDefinitionGroup>
+		<PackageReference>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<ProjectReference>
+			<PrivateAssets>all</PrivateAssets>
+		</ProjectReference>
+	</ItemDefinitionGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.7" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.7" />
+	</ItemGroup>
+
+	<ItemGroup>
+    <ProjectReference Include="..\Devboost.Pagamentos.DomainService\Devboost.Pagamentos.DomainService.csproj" />
+    <ProjectReference Include="..\Devboost.Pagamentos.Domain\Devboost.Pagamentos.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
