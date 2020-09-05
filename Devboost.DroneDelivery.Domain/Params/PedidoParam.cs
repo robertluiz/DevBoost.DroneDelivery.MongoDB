@@ -8,11 +8,7 @@ namespace Devboost.DroneDelivery.Domain.Params
         public int Peso { get; set; }        
         public string Login { get; set; }
         public float DistanciaEmMetros { get; set; }
-        //[Required]
-        //public double Latitude { get; set; }
-        //[Required]
-        //public double Longitude { get; set; }
         [Required]
-        public DateTime DataHora { get; set; }        
+        public DateTime DataHora { get; set; }
     }
 }
