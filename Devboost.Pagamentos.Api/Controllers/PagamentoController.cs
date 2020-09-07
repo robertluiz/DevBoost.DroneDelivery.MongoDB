@@ -19,12 +19,12 @@ namespace Devboost.Pagamentos.Api.Controllers
         }
 
         /// <summary>
-        /// Criar um pedido
+        /// Processar Pagamento
         /// </summary>
         /// <remarks>
         /// Sample request:
         ///
-        ///     POST /api/pedidos
+        ///     POST /api/pagamento
         ///     {
         ///        "peso": 10000
         ///     }
@@ -36,8 +36,10 @@ namespace Devboost.Pagamentos.Api.Controllers
         {
             try
             {
-                await _pagamentoCommand.ProcessarPagamento(cartao);
+                var resultado = await _pagamentoCommand.ProcessarPagamento(cartao);
 
+                if (resultado.Count > 0)
+                    return BadRequest(string.Format("Dados para pagamento incorreto: \r\n{0}", string.Join("\r\n", resultado)));
                 return Ok("Pagamento realizado com sucesso!");
             }
             catch (Exception e)
