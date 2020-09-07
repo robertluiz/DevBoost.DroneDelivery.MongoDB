@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using Devboost.Pagamentos.Domain.Interfaces.Repository;
+using Devboost.Pagamentos.Repository.Tools;
 
 namespace Devboost.Pagamentos.Repository.Implementation
 {
@@ -22,7 +23,7 @@ namespace Devboost.Pagamentos.Repository.Implementation
         {
             var model = obj.ConvertTo<TModel>();
 
-            _connection.CreateTableIfNotExists<TModel>();            
+            _connection.CheckBase();            
             await _connection.InsertAsync(model);
         }
 
@@ -30,13 +31,13 @@ namespace Devboost.Pagamentos.Repository.Implementation
         {
             var model = obj.ConvertTo<TModel>();
 
-            _connection.CreateTableIfNotExists<TModel>();
+            _connection.CheckBase();
             await _connection.SaveAsync(model, references: true);            
         }
 
         public async Task<IEnumerable<TEntity>> GetAll()
         {
-            _connection.CreateTableIfNotExists<TModel>();
+            _connection.CheckBase();
 
             var list = await _connection.SelectAsync<TModel>();
 
@@ -45,7 +46,7 @@ namespace Devboost.Pagamentos.Repository.Implementation
 
         public async Task<TEntity> GetByID(Guid id)
         {
-            _connection.CreateTableIfNotExists<TModel>();           
+            _connection.CheckBase();
 
             var p = await _connection.SingleAsync<TModel>(new { Id = id });
 
@@ -56,7 +57,7 @@ namespace Devboost.Pagamentos.Repository.Implementation
         {
             var model = obj.ConvertTo<TModel>();
 
-            _connection.CreateTableIfNotExists<TModel>();
+            _connection.CheckBase();
             await _connection.UpdateAsync(model);
         }
     }
