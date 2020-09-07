@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Threading.Tasks;
 using Xunit;
+using Devboost.Pagamentos.Domain.Enums;
 
 namespace Devboost.Pagamentos.UnitTestsTDD
 {
@@ -42,9 +43,9 @@ namespace Devboost.Pagamentos.UnitTestsTDD
 			var datetime = DateTime.Now;
 			var Cartao = new AutoFaker<Cartao>()
 				.RuleFor(fake => fake.Id, fake => guidCartao)
-				.RuleFor(fake => fake.Bandeira, fake => Domain.Enums.PagamentoBandeiraEnum.MasterCard)
+				.RuleFor(fake => fake.Bandeira, fake => PagamentoBandeiraEnum.MasterCard)
 				.RuleFor(fake => fake.DataValidade, fake => datetime)
-				.RuleFor(fake => fake.Tipo, fake => Domain.Enums.TipoCartaoEnum.Credito)
+				.RuleFor(fake => fake.Tipo, fake => TipoCartaoEnum.Credito)
 				.Generate();
 
 			var formaPagamento = new AutoFaker<FormaPagamento>()
@@ -117,9 +118,9 @@ namespace Devboost.Pagamentos.UnitTestsTDD
 			var datetime = DateTime.Now;
 			var Cartao = new AutoFaker<Cartao>()
 				.RuleFor(fake => fake.Id, fake => guidCartao)
-				.RuleFor(fake => fake.Bandeira, fake => Domain.Enums.PagamentoBandeiraEnum.MasterCard)
+				.RuleFor(fake => fake.Bandeira, fake => PagamentoBandeiraEnum.MasterCard)
 				.RuleFor(fake => fake.DataValidade, fake => datetime)
-				.RuleFor(fake => fake.Tipo, fake => Domain.Enums.TipoCartaoEnum.Credito)
+				.RuleFor(fake => fake.Tipo, fake => TipoCartaoEnum.Credito)
 				.Generate();
 
 			var formaPagamento = new AutoFaker<FormaPagamento>()
@@ -132,7 +133,7 @@ namespace Devboost.Pagamentos.UnitTestsTDD
 				.RuleFor(fake => fake.FormaPagamentoID, fake => guid)
 				.RuleFor(fake => fake.FormaPagamento, fake => formaPagamento)
 				.RuleFor(fake => fake.Valor, fake => 1)
-				.RuleFor(fake => fake.StatusPagamento, fake => Domain.Enums.StatusPagamentoEnum.Aprovado)
+				.RuleFor(fake => fake.StatusPagamento, fake => StatusPagamentoEnum.Aprovado)
 				.Generate();
 
 			await baseRepositoryMock.Inserir(expectresult.ConvertTo<PagamentoEntity>());
@@ -165,12 +166,12 @@ namespace Devboost.Pagamentos.UnitTestsTDD
 
 			retorno.FormaPagamento.Cartao = new Cartao();
 			retorno.FormaPagamento.Cartao.Id = AtribuirValor<Guid>(propriedades, "idCartao");
-			retorno.FormaPagamento.Cartao.Bandeira = AtribuirValor<Domain.Enums.PagamentoBandeiraEnum>(propriedades, "Bandeira");
+			retorno.FormaPagamento.Cartao.Bandeira = AtribuirValor<PagamentoBandeiraEnum>(propriedades, "Bandeira");
 			DateTime data = AtribuirValor<DateTime>(propriedades, "DataValidade");
 			retorno.FormaPagamento.Cartao.DataValidade = new DateTime(data.Year, data.Day, data.Month, data.Hour, data.Minute, data.Second);
 			retorno.FormaPagamento.Cartao.CodSeguranca = AtribuirValor<string>(propriedades, "CodSeguranca");
 			retorno.FormaPagamento.Cartao.NumeroCartao = AtribuirValor<string>(propriedades, "NumeroCartao");
-			retorno.FormaPagamento.Cartao.Tipo = AtribuirValor<Domain.Enums.TipoCartaoEnum>(propriedades, "Tipo");
+			retorno.FormaPagamento.Cartao.Tipo = AtribuirValor<TipoCartaoEnum>(propriedades, "Tipo");
 			return retorno;
 		}
 		private List<Dictionary<string, string>> RetornarPropriedadesDinamicas(dynamic objetoDinamico)
