@@ -14,7 +14,7 @@ namespace Devboost.Pagamentos.UnitTestsTDD.Domain.Entities
     {
         [Fact(DisplayName = "Validar dados pagamento")]
         [Trait("PagamentoEntityTests", "Entities Tests")]
-        public async void ValidarDadosPagamento_Test_Sucesso()
+        public void ValidarDadosPagamento_Test_Sucesso()
         {
             //Given
             var commandMock = new Mock<IEntity>();
@@ -42,7 +42,7 @@ namespace Devboost.Pagamentos.UnitTestsTDD.Domain.Entities
 
         [Fact(DisplayName = "Validar dados pagamento Erro")]
         [Trait("PagamentoEntityTests", "Entities Tests")]
-        public async void ValidarDadosPagamento_Test_Erro()
+        public void ValidarDadosPagamento_Test_Erro()
         {
             //Given
             var commandMock = new Mock<IEntity>();
