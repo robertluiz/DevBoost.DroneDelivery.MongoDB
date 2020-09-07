@@ -13,7 +13,7 @@ namespace Devboost.Pagamentos.Repository.Implementation
 	{
 		private readonly IDbConnection _connection;
 
-		public PagamentoRepository(IDbConnection connection)
+		public PagamentoRepository(IDbConnection connection) : base(connection)
 		{
 			_connection = connection;
 		}
