@@ -57,7 +57,7 @@ namespace Devboost.Pagamentos.Domain.Entities
 
         public void ValidaCodSeguranca(List<string> listErros)
         {
-            if (string.IsNullOrEmpty(NumeroCartao) || NumeroCartao.Length != 3)
+            if (string.IsNullOrEmpty(CodSeguranca) || CodSeguranca.Length != 3)
                 listErros.Add("Código de segurança deve conter 3 dígitos!");
         }
 
