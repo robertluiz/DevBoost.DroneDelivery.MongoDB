@@ -21,16 +21,6 @@ namespace Devboost.Pagamentos.Api.Controllers
         /// <summary>
         /// Processar Pagamento
         /// </summary>
-        /// <remarks>
-        /// Sample request:
-        ///
-        ///     POST /api/pagamento
-        ///     {
-        ///        "peso": 10000
-        ///     }
-        ///
-        /// </remarks>        
-        /// <param name="command"></param>  
         [HttpPost("cartao")]
         public async Task<IActionResult> Post([FromBody] CartaoParam cartao)
         {
