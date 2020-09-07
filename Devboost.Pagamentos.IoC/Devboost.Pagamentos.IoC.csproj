@@ -25,6 +25,7 @@
 	<ItemGroup>
     <ProjectReference Include="..\Devboost.Pagamentos.DomainService\Devboost.Pagamentos.DomainService.csproj" />
     <ProjectReference Include="..\Devboost.Pagamentos.Domain\Devboost.Pagamentos.Domain.csproj" />
+    <ProjectReference Include="..\Devboost.Pagamentos.External\Devboost.Pagamentos.External.csproj" />
     <ProjectReference Include="..\Devboost.Pagamentos.Repository\Devboost.Pagamentos.Repository.csproj" />
   </ItemGroup>
 

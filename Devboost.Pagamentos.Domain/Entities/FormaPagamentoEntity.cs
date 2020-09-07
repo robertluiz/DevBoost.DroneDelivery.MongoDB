@@ -5,7 +5,7 @@ namespace Devboost.Pagamentos.Domain.Entities
 {
     public class FormaPagamentoEntity : IEntity
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
         
         public Guid CartaoID { get; set; }
         public CartaoEntity Cartao { get; set; }
