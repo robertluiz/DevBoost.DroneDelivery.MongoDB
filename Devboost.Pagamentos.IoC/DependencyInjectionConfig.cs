@@ -8,7 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceStack.OrmLite;
 using System.Diagnostics.CodeAnalysis;
+using Devboost.Pagamentos.Domain.Interfaces.External.Context;
 using Devboost.Pagamentos.Domain.VO;
+using Devboost.Pagamentos.External.Context;
 
 namespace Devboost.Pagamentos.IoC
 {
@@ -26,8 +28,12 @@ namespace Devboost.Pagamentos.IoC
 
             services.AddScoped<IPagamentoCommand, PagamentoCommand>();
             services.AddScoped<IPagamentoRepository, PagamentoRepository>();
+
             services.AddScoped<IGatewayExternalService, GatewayExternalService>();
             services.AddScoped<IDeliveryExternalService, DeliveryExternalService>();
+
+            services.AddScoped<IGatewayExternalContext, GatewayExternalContext>();
+            services.AddScoped<IDeliveryExternalContext, DeliveryExternalContext>();
 
             services.AddTransient((db) =>
             {

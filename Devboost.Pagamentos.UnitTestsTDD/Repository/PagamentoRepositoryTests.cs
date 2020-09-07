@@ -18,7 +18,7 @@ namespace Devboost.Pagamentos.UnitTestsTDD
 	{
 		private readonly IAutoFaker _faker;
 		private readonly CompareLogic _comparison;
-		private string conexao = @"Data Source=FLAVIO-NB\SQLEXPRESS;Initial Catalog=DroneDelivery2;Integrated Security=True";
+		//private string conexao = @"Data Source=FLAVIO-NB\SQLEXPRESS;Initial Catalog=DroneDelivery2;Integrated Security=True";
 		public PagamentoRepositoryTests()
 		{
 			_faker = AutoFaker.Create();
@@ -29,9 +29,8 @@ namespace Devboost.Pagamentos.UnitTestsTDD
 		[Trait("PagamentoRepositoryTests", "Repository Tests")]
 		public async Task Inserir_Test()
 		{
-			//using var dbconnection = await new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider).OpenAsync();
-			var dbconnection = await new OrmLiteConnectionFactory(conexao,
-					SqlServerDialect.Provider).OpenAsync();
+			using var dbconnection = await new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider).OpenAsync();
+		
 			var baseRepositoryMock = new PagamentoRepository(dbconnection);
 
 			dbconnection.CreateTableIfNotExists<Cartao>();
@@ -62,7 +61,7 @@ namespace Devboost.Pagamentos.UnitTestsTDD
 
 			var param = expectresult.ConvertTo<PagamentoEntity>();
 			//When
-			await baseRepositoryMock.Inserir(param);
+			await baseRepositoryMock.AddUsingRef(param);
 
 			var pagamento = dbconnection.Select<Pagamento>();
 			var formaPagamento2 = dbconnection.Select<FormaPagamento>();

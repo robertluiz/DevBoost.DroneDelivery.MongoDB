@@ -2,12 +2,13 @@
 using System;
 using Devboost.Pagamentos.Domain.Interfaces.Entity;
 using System.Collections.Generic;
+using Devboost.Pagamentos.Domain.Utilitys;
 
 namespace Devboost.Pagamentos.Domain.Entities
 {
     public class CartaoEntity : IEntity
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
         public PagamentoBandeiraEnum Bandeira { get; set; }
         public string Nome { get; set; }
         public string NumeroCartao { get; set; }
@@ -33,7 +34,7 @@ namespace Devboost.Pagamentos.Domain.Entities
         public void ValidaBandeira(List<string> listErros)
         {
             if (!Enum.IsDefined(typeof(PagamentoBandeiraEnum), Bandeira))
-                listErros.Add(string.Format("Bandeira não corresponde com o valores: {0} esperados!", GetStringByEnumType<PagamentoBandeiraEnum>()));
+                listErros.Add(string.Format("Bandeira não corresponde com o valores: {0} esperados!", HelperEnum.GetStringByEnumType<PagamentoBandeiraEnum>()));
         }
 
         public void ValidaNome(List<string> listErros)
@@ -63,48 +64,9 @@ namespace Devboost.Pagamentos.Domain.Entities
         public void ValidaTipoCartao(List<string> listErros)
         {
             if (!Enum.IsDefined(typeof(TipoCartaoEnum), Tipo))
-                listErros.Add(string.Format("Tipo de cartão não corresponde com o valores: {0} esperados!", GetStringByEnumType<TipoCartaoEnum>()));
+                listErros.Add(string.Format("Tipo de cartão não corresponde com o valores: {0} esperados!", HelperEnum.GetStringByEnumType<TipoCartaoEnum>()));
         }
 
-        #endregion
-
-        #region Utility methods
-        //public List<string> GetStringBandeiras()
-        //{
-        //    List<string> listBandeiras = new List<string>();
-
-        //    var contador = 0;
-
-        //    foreach (var item in Enum.GetValues(typeof(PagamentoBandeiraEnum)))
-        //    {
-        //        contador += 1;
-
-        //        var valueString = contador > 0 ? ", " + item.ToString() : item.ToString();
-
-        //        listBandeiras.Add(valueString);
-        //    }
-
-        //    return listBandeiras;
-        //}
-
-
-        public List<string> GetStringByEnumType<TEnum>()
-        {
-            List<string> listBandeiras = new List<string>();
-
-            var contador = 0;
-
-            foreach (var item in Enum.GetValues(typeof(TEnum)))
-            {
-                contador += 1;
-
-                var valueString = contador > 0 ? ", " + item.ToString() : item.ToString();
-
-                listBandeiras.Add(valueString);
-            }
-
-            return listBandeiras;
-        }
-        #endregion
+        #endregion        
     }
 }
