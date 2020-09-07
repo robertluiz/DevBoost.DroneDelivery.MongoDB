@@ -13,14 +13,14 @@ namespace Devboost.Pagamentos.DomainService.Commands
     public class PagamentoCommand: IPagamentoCommand
     {
         private readonly IPagamentoRepository _pagamentoRepository;
-        private readonly IGatewayService _gatewayService;
-        private readonly IDeliveryService _deliveryService;
+        private readonly IGatewayExternalService _gatewayExternalService;
+        private readonly IDeliveryExternalService _deliveryExternalService;
 
-        public PagamentoCommand(IPagamentoRepository pagamentoRepository, IGatewayService gatewayService, IDeliveryService deliveryService)
+        public PagamentoCommand(IPagamentoRepository pagamentoRepository, IGatewayExternalService gatewayExternalService, IDeliveryExternalService deliveryExternalService)
         {
             _pagamentoRepository = pagamentoRepository;
-            _gatewayService = gatewayService;
-            _deliveryService = deliveryService;
+            _gatewayExternalService = gatewayExternalService;
+            _deliveryExternalService = deliveryExternalService;
         }
 
         public async Task<string[]> ProcessarPagamento(CartaoParam cartao)
@@ -33,8 +33,8 @@ namespace Devboost.Pagamentos.DomainService.Commands
             pagamento.StatusPagamento = StatusPagamentoEnum.Pendente;
             await _pagamentoRepository.AddUsingRef(pagamento);
 
-            var confirmacaoPagamento = await _gatewayService.EfetuaPagamento(pagamento);
-            await _deliveryService.SinalizaStatusPagamento(confirmacaoPagamento);
+            var confirmacaoPagamento = await _gatewayExternalService.EfetuaPagamento(pagamento);
+            await _deliveryExternalService.SinalizaStatusPagamento(confirmacaoPagamento);
             
             pagamento.StatusPagamento = confirmacaoPagamento.StatusPagamento;
             await _pagamentoRepository.Update(pagamento);

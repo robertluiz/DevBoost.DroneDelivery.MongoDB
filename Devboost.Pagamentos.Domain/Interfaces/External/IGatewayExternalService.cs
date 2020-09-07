@@ -4,7 +4,7 @@ using Devboost.Pagamentos.Domain.Entities;
 
 namespace Devboost.Pagamentos.Domain.Interfaces.External
 {
-    public interface IGatewayService
+    public interface IGatewayExternalService
     {
         Task<GatewayDTO> EfetuaPagamento(PagamentoEntity pagamento);
     }

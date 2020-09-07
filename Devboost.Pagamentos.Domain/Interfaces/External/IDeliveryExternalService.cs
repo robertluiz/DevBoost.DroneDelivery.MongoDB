@@ -3,7 +3,7 @@ using Devboost.Pagamentos.Domain.DTOs;
 
 namespace Devboost.Pagamentos.Domain.Interfaces.External
 {
-    public interface IDeliveryService
+    public interface IDeliveryExternalService
     {
         Task SinalizaStatusPagamento(GatewayDTO statusPagamento);
     }

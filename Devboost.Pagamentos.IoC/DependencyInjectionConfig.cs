@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceStack.OrmLite;
 using System.Diagnostics.CodeAnalysis;
+using Devboost.Pagamentos.Domain.VO;
 
 namespace Devboost.Pagamentos.IoC
 {
@@ -16,11 +17,17 @@ namespace Devboost.Pagamentos.IoC
     {
         public static IServiceCollection ResolveDependencies(this IServiceCollection services, IConfiguration config)
         {
-            services.AddSingleton(config);
+
+            services.AddSingleton(p => new ExternalConfigVO
+            {
+                GatewayUrl = config.GetValue<string>("GATEWAY__URL"),
+                DeliveryUrl = config.GetValue<string>("DELIVERY_URL")
+            });
+
             services.AddScoped<IPagamentoCommand, PagamentoCommand>();
             services.AddScoped<IPagamentoRepository, PagamentoRepository>();
-            services.AddScoped<IGatewayService, GatewayService>();
-            services.AddScoped<IDeliveryService, DeliveryService>();
+            services.AddScoped<IGatewayExternalService, GatewayExternalService>();
+            services.AddScoped<IDeliveryExternalService, DeliveryExternalService>();
 
             services.AddTransient((db) =>
             {

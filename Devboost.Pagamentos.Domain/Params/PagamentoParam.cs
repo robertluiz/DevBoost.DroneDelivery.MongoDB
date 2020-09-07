@@ -9,5 +9,7 @@ namespace Devboost.Pagamentos.Domain.Params
         public Guid IdPedido { get; set; }
         [Required]
         public float Valor { get; set; }
+
+        public string Descricao { get; set; }
     }
 }
