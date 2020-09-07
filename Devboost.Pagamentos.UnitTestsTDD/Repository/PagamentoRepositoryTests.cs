@@ -118,7 +118,7 @@ namespace Devboost.Pagamentos.UnitTestsTDD
 				.RuleFor(fake => fake.StatusPagamento, fake => StatusPagamentoEnum.Aprovado)
 				.Generate();
 
-			await baseRepositoryMock.Inserir(expectresult.ConvertTo<PagamentoEntity>());
+			await baseRepositoryMock.AddUsingRef(expectresult.ConvertTo<PagamentoEntity>());
 			Guid idPagamento = expectresult.Id;
 
 			var pgamento = dbconnection.Select<Pagamento>();
