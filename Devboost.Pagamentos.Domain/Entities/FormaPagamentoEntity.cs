@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Devboost.Pagamentos.Domain.Interfaces.Entity;
 
 namespace Devboost.Pagamentos.Domain.Entities
@@ -6,13 +8,18 @@ namespace Devboost.Pagamentos.Domain.Entities
     public class FormaPagamentoEntity : IEntity
     {
         public Guid? Id { get; set; }
-        
-        public Guid CartaoID { get; set; }
         public CartaoEntity Cartao { get; set; }
         //public BoletoEntity Boleto { get; set; }
-        public string[] Validar()
+        public List<string> Validar()
         {
-            throw new NotImplementedException();
+            var result = new List<string>();
+
+            var listErrosCartao = Cartao.Validar();
+
+            if (listErrosCartao.Count() > 0)
+                result.AddRange(listErrosCartao);
+
+            return result;
         }
     }
 }

@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Devboost.Pagamentos.DomainS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Devboost.Pagamentos.UnitTestsTDD", "Devboost.Pagamentos.UnitTestsTDD\Devboost.Pagamentos.UnitTestsTDD.csproj", "{3A61913B-5528-4556-92A2-8047205BF562}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - EntryPonit", "1 - EntryPonit", "{A3998B9A-7987-445E-BE7C-5DBFF7F0BDFD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - EntryPoint", "1 - EntryPoint", "{A3998B9A-7987-445E-BE7C-5DBFF7F0BDFD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Domain", "2 - Domain", "{7421463D-90DB-49B0-9684-D6AEA38975DA}"
 EndProject
@@ -41,7 +41,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Infra", "3 - Infra", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Tests", "4 - Tests", "{36C2BA87-3799-4D3D-8217-35D041763F10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devboost.Pagamentos.External", "Devboost.Pagamentos.External\Devboost.Pagamentos.External.csproj", "{30A0F3D9-F592-43B0-90CA-0A3F9EE8F735}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Devboost.Pagamentos.External", "Devboost.Pagamentos.External\Devboost.Pagamentos.External.csproj", "{30A0F3D9-F592-43B0-90CA-0A3F9EE8F735}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - EntryPoint", "1 - EntryPoint", "{CB8A9C66-EFD2-41B4-84CF-D6BCAF60B032}"
 EndProject
