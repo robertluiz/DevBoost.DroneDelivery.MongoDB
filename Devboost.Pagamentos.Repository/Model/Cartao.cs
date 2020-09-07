@@ -1,10 +1,12 @@
 ﻿using Devboost.Pagamentos.Domain.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Devboost.Pagamentos.Repository.Model
 {
+    [Table("dbo.Cartao")]
 	public class Cartao
 	{
 		public Cartao() 

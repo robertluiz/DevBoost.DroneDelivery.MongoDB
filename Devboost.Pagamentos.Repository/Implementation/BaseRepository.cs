@@ -19,7 +19,7 @@ namespace Devboost.Pagamentos.Repository.Implementation
             _connection = connection;
         }
 
-        public async Task Add(TEntity obj)
+        public virtual async Task Add(TEntity obj)
         {
             var model = obj.ConvertTo<TModel>();
 
@@ -27,7 +27,7 @@ namespace Devboost.Pagamentos.Repository.Implementation
             await _connection.InsertAsync(model);
         }
 
-        public async Task AddUsingRef(TEntity obj)
+        public virtual async Task AddUsingRef(TEntity obj)
         {
             var model = obj.ConvertTo<TModel>();
 
@@ -35,7 +35,7 @@ namespace Devboost.Pagamentos.Repository.Implementation
             await _connection.SaveAsync(model, references: true);            
         }
 
-        public async Task<IEnumerable<TEntity>> GetAll()
+        public virtual async Task<IEnumerable<TEntity>> GetAll()
         {
             _connection.CheckBase();
 
@@ -44,7 +44,7 @@ namespace Devboost.Pagamentos.Repository.Implementation
             return list.ConvertTo<List<TEntity>>();
         }
 
-        public async Task<TEntity> GetByID(Guid id)
+        public virtual async Task<TEntity> GetByID(Guid id)
         {
             _connection.CheckBase();
 
@@ -53,7 +53,7 @@ namespace Devboost.Pagamentos.Repository.Implementation
             return p.ConvertTo<TEntity>();
         }
 
-        public async Task Update(TEntity obj)
+        public virtual async Task Update(TEntity obj)
         {
             var model = obj.ConvertTo<TModel>();
 

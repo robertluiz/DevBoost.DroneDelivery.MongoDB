@@ -6,6 +6,7 @@ using ServiceStack.OrmLite;
 using System;
 using System.Data;
 using System.Threading.Tasks;
+using Devboost.Pagamentos.Repository.Tools;
 
 namespace Devboost.Pagamentos.Repository.Implementation
 {
@@ -17,26 +18,16 @@ namespace Devboost.Pagamentos.Repository.Implementation
 		{
 			_connection = connection;
 		}
-		public async Task Inserir(PagamentoEntity pagamento)
+        public override async Task AddUsingRef(PagamentoEntity pagamento)
 		{
-			try
-			{
-				var model = pagamento.ConvertTo<Pagamento>();
-				//if (_connection.CreateTableIfNotExists<Pagamento>()) 
-				//{
-				//	_connection.CreateTableIfNotExists<FormaPagamento>();
-				//	_connection.CreateTableIfNotExists<Cartao>();
-				//}
-				_connection.Save(model.FormaPagamento.Cartao);
-				_connection.Save(model.FormaPagamento);
 
-				await _connection.SaveAsync(model);
-			}
-			catch (Exception ex)
-			{
-				throw new Exception(ex.Message);
-			}
-		}
+            var model = pagamento.ConvertTo<Pagamento>(); 
+            _connection.CheckBase();
+            
+            await _connection.SaveAsync(model.FormaPagamento.Cartao);
+            await _connection.SaveAsync(model, references: true);
+
+        }
 
         public async Task<PagamentoEntity> GetPagamentoByIdPedido(Guid idPedido)
         {

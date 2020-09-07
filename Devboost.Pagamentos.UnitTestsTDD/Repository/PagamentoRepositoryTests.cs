@@ -10,6 +10,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Threading.Tasks;
+using Devboost.Pagamentos.IoC;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace Devboost.Pagamentos.UnitTestsTDD
@@ -18,12 +20,15 @@ namespace Devboost.Pagamentos.UnitTestsTDD
 	{
 		private readonly IAutoFaker _faker;
 		private readonly CompareLogic _comparison;
-		//private string conexao = @"Data Source=FLAVIO-NB\SQLEXPRESS;Initial Catalog=DroneDelivery2;Integrated Security=True";
+	
+
 		public PagamentoRepositoryTests()
 		{
 			_faker = AutoFaker.Create();
 			_comparison = new CompareLogic();
-		}
+            var serviceCollection = new ServiceCollection();
+			serviceCollection.ResolveConverters().BuildServiceProvider();
+        }
 
 		[Fact(DisplayName = "Inserir")]
 		[Trait("PagamentoRepositoryTests", "Repository Tests")]
@@ -33,29 +38,25 @@ namespace Devboost.Pagamentos.UnitTestsTDD
 		
 			var baseRepositoryMock = new PagamentoRepository(dbconnection);
 
-			dbconnection.CreateTableIfNotExists<Cartao>();
-			dbconnection.CreateTableIfNotExists<FormaPagamento>();
-			dbconnection.CreateTableIfNotExists<Pagamento>();
+
 
 			var guid = Guid.NewGuid();
 			var guidCartao = Guid.NewGuid();
 			var datetime = DateTime.Now;
 			var Cartao = new AutoFaker<Cartao>()
-				.RuleFor(fake => fake.Id, fake => guidCartao)
+                .RuleFor(fake => fake.Bandeira, fake => Domain.Enums.PagamentoBandeiraEnum.MasterCard)
 				.RuleFor(fake => fake.Bandeira, fake => Domain.Enums.PagamentoBandeiraEnum.MasterCard)
 				.RuleFor(fake => fake.DataValidade, fake => datetime)
 				.RuleFor(fake => fake.Tipo, fake => Domain.Enums.TipoCartaoEnum.Credito)
 				.Generate();
 
 			var formaPagamento = new AutoFaker<FormaPagamento>()
-				.RuleFor(fake => fake.Id, fake => guid)
-				.RuleFor(fake => fake.CartaoID, fake => guidCartao)
+                .RuleFor(fake => fake.CartaoID, fake => guidCartao)
 				.RuleFor(fake => fake.Cartao, fake => Cartao)
 				.Generate();
 
 			var expectresult = new AutoFaker<Pagamento>()
-				.RuleFor(fake => fake.FormaPagamentoID, fake => guid)
-				.RuleFor(fake => fake.FormaPagamento, fake => formaPagamento)
+                .RuleFor(fake => fake.FormaPagamento, fake => formaPagamento)
 				.RuleFor(fake => fake.Valor, fake => 1)
 				.Generate();
 
@@ -68,32 +69,13 @@ namespace Devboost.Pagamentos.UnitTestsTDD
 			var cartao = dbconnection.Select<Cartao>();
 			
 			var result = dbconnection.From<Pagamento>()
-				.Join<Pagamento, FormaPagamento>((pt, fp) => pt.FormaPagamentoID == fp.Id)
+				.Join<FormaPagamento>()
 				.Join<FormaPagamento, Cartao>((fp, ct) => fp.CartaoID == ct.Id)
-				.Where(c => c.Id == expectresult.Id)
-				.Select<Pagamento, FormaPagamento, Cartao>((p, f, c) =>
-				new
-				{
-					idPagamento = p.Id,
-					p.IdPedido,
-					p.Valor,
-					p.FormaPagamentoID,
-					IdFormaPagamento = f.Id,
-					f.CartaoID,
-					idCartao = c.Id,
-					c.DataValidade,
-					c.NumeroCartao,
-					c.Tipo,
-					c.CodSeguranca,
-					c.Bandeira
-				});
+				.Where(c => c.Id == expectresult.Id);
 
-			var pagamentos = dbconnection.Select<dynamic>(result);
+			var pagamentos = dbconnection.Single(result);
 
-			Pagamento retorno = AtribuirClasse(pagamentos[0]);
-			retorno.FormaPagamento.Cartao.DataValidade = datetime;
-
-			var comparacao = _comparison.Compare(retorno, expectresult);
+			var comparacao = _comparison.Compare(pagamentos, expectresult);
 
 			Assert.True(comparacao.AreEqual);
 			//Then

@@ -47,6 +47,7 @@
     <ProjectReference Include="..\Devboost.Pagamentos.Api\Devboost.Pagamentos.Api.csproj" />
     <ProjectReference Include="..\Devboost.Pagamentos.DomainService\Devboost.Pagamentos.DomainService.csproj" />
     <ProjectReference Include="..\Devboost.Pagamentos.Domain\Devboost.Pagamentos.Domain.csproj" />
+    <ProjectReference Include="..\Devboost.Pagamentos.IoC\Devboost.Pagamentos.IoC.csproj" />
     <ProjectReference Include="..\Devboost.Pagamentos.Repository\Devboost.Pagamentos.Repository.csproj" />
   </ItemGroup>
 
