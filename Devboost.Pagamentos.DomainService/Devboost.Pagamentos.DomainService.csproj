@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Flurl" Version="2.8.2" />
     <PackageReference Include="ServiceStack.Text" Version="5.9.2" />
   </ItemGroup>
 
