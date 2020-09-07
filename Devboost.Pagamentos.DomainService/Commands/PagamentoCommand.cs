@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Devboost.Pagamentos.Domain.Entities;
+using Devboost.Pagamentos.Domain.Enums;
 using Devboost.Pagamentos.Domain.Interfaces.Commands;
+using Devboost.Pagamentos.Domain.Interfaces.External;
 using Devboost.Pagamentos.Domain.Interfaces.Repository;
 using Devboost.Pagamentos.Domain.Params;
 using ServiceStack;
@@ -11,16 +13,33 @@ namespace Devboost.Pagamentos.DomainService.Commands
     public class PagamentoCommand: IPagamentoCommand
     {
         private readonly IPagamentoRepository _pagamentoRepository;
-        public PagamentoCommand(IPagamentoRepository pagamentoRepository)
+        private readonly IGatewayService _gatewayService;
+        private readonly IDeliveryService _deliveryService;
+
+        public PagamentoCommand(IPagamentoRepository pagamentoRepository, IGatewayService gatewayService, IDeliveryService deliveryService)
         {
             _pagamentoRepository = pagamentoRepository;
+            _gatewayService = gatewayService;
+            _deliveryService = deliveryService;
         }
 
-        public async Task ProcessarPagamento(CartaoParam cartao)
+        public async Task<string[]> ProcessarPagamento(CartaoParam cartao)
         {
             var pagamento = cartao.ConvertTo<PagamentoEntity>();
+            var erros = pagamento.Validar();
 
-            await _pagamentoRepository.Inserir(pagamento);
+            if (erros.Length > 0) return erros;
+
+            pagamento.StatusPagamento = StatusPagamentoEnum.Pendente;
+            await _pagamentoRepository.AddUsingRef(pagamento);
+
+            var confirmacaoPagamento = await _gatewayService.EfetuaPagamento(pagamento);
+            await _deliveryService.SinalizaStatusPagamento(confirmacaoPagamento);
+            
+            pagamento.StatusPagamento = confirmacaoPagamento.StatusPagamento;
+            await _pagamentoRepository.Update(pagamento);
+
+            return erros;
         }
     }
 }
