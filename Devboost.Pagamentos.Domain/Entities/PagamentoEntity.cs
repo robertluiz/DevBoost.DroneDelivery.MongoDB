@@ -8,6 +8,7 @@ namespace Devboost.Pagamentos.Domain.Entities
     {
         public Guid Id { get; set; }
         public Guid IdPedido { get; set; }
+        public string Descricao { get; set; }
         public float Valor { get; set; }
         public Guid FormaPagamentoID { get; set; }
 
