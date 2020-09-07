@@ -6,6 +6,7 @@ using Devboost.Pagamentos.Domain.Params;
 using KellermanSoftware.CompareNetObjects;
 using Moq;
 using ServiceStack;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Devboost.Pagamentos.UnitTestsTDD.API
@@ -23,15 +24,14 @@ namespace Devboost.Pagamentos.UnitTestsTDD.API
 
             var param = faker.Generate<CartaoParam>();
 
-            var response = "Pedido realizado com sucesso!";
+            var response = "Pagamento realizado com sucesso!";
 
             var baseControllerMock = new PagamentoController(commandMock.Object);
             var expectResponse = baseControllerMock.Ok(response);
 
             var pagamento = param.ConvertTo<PagamentoEntity>();
-            var erros = pagamento.Validar();
-
-            commandMock.Setup(r => r.ProcessarPagamento(It.IsAny<CartaoParam>())).ReturnsAsync(erros).Verifiable();
+            
+            commandMock.Setup(r => r.ProcessarPagamento(It.IsAny<CartaoParam>())).ReturnsAsync(new List<string>()).Verifiable();
 
             //When
             var result = await baseControllerMock.Post(param);

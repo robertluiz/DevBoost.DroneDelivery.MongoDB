@@ -14,8 +14,7 @@ namespace Devboost.Pagamentos.Repository.Model
 		{
 			Id = Guid.NewGuid();
 		}
-		public Guid Id { get; set; }
-        public string Descricao { get; set; }
+		public Guid Id { get; set; }        
 
 		public Guid IdPedido { get; set; }
         public StatusPagamentoEnum StatusPagamento { get; set; }
