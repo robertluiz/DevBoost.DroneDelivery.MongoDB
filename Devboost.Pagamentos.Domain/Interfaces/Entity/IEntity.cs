@@ -1,7 +1,9 @@
-﻿namespace Devboost.Pagamentos.Domain.Interfaces.Entity
+﻿using System.Collections.Generic;
+
+namespace Devboost.Pagamentos.Domain.Interfaces.Entity
 {
     public interface IEntity
     {
-        string[] Validar();
+        List<string> Validar();
     }
 }

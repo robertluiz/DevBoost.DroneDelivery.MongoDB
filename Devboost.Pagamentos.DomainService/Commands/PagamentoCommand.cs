@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Devboost.Pagamentos.Domain.Entities;
 using Devboost.Pagamentos.Domain.Enums;
 using Devboost.Pagamentos.Domain.Interfaces.Commands;
@@ -23,12 +24,12 @@ namespace Devboost.Pagamentos.DomainService.Commands
             _deliveryExternalService = deliveryExternalService;
         }
 
-        public async Task<string[]> ProcessarPagamento(CartaoParam cartao)
+        public async Task<List<string>> ProcessarPagamento(CartaoParam cartao)
         {
             var pagamento = cartao.ConvertTo<PagamentoEntity>();
             var erros = pagamento.Validar();
 
-            if (erros.Length > 0) return erros;
+            if (erros.Count > 0) return erros;
 
             pagamento.StatusPagamento = StatusPagamentoEnum.Pendente;
             await _pagamentoRepository.AddUsingRef(pagamento);
