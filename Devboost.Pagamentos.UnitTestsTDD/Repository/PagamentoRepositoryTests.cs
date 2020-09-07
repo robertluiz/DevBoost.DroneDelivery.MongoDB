@@ -62,7 +62,7 @@ namespace Devboost.Pagamentos.UnitTestsTDD
 
 			var param = expectresult.ConvertTo<PagamentoEntity>();
 			//When
-			await baseRepositoryMock.AddUsingRef(param);
+			await baseRepositoryMock.Inserir(param);
 
 			var pagamento = dbconnection.Select<Pagamento>();
 			var formaPagamento2 = dbconnection.Select<FormaPagamento>();
@@ -104,14 +104,14 @@ namespace Devboost.Pagamentos.UnitTestsTDD
 		[Trait("PagamentoRepositoryTests", "Repository Tests")]
 		public async Task RetonarPagamento_Test()
 		{
-			//using var dbconnection = await new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider).OpenAsync();
-			var dbconnection = await new OrmLiteConnectionFactory(conexao,
-					SqlServerDialect.Provider).OpenAsync();
+			using var dbconnection = await new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider).OpenAsync();
+			//var dbconnection = await new OrmLiteConnectionFactory(conexao,
+					//SqlServerDialect.Provider).OpenAsync();
 			var baseRepositoryMock = new PagamentoRepository(dbconnection);
 
-			//dbconnection.CreateTableIfNotExists<Cartao>();
-			//dbconnection.CreateTableIfNotExists<FormaPagamento>();
-			//dbconnection.CreateTableIfNotExists<Pagamento>();
+			dbconnection.CreateTableIfNotExists<Cartao>();
+			dbconnection.CreateTableIfNotExists<FormaPagamento>();
+			dbconnection.CreateTableIfNotExists<Pagamento>();
 
 			var guid = Guid.NewGuid();
 			var guidCartao = Guid.NewGuid();
@@ -151,7 +151,35 @@ namespace Devboost.Pagamentos.UnitTestsTDD
 			Assert.True(comparacao.AreEqual);
 		}
 
-	    private Pagamento AtribuirClasse(dynamic pagamentos)
+		[Fact(DisplayName = "Atualizar")]
+		[Trait("PagamentoRepositoryTests", "Repository Tests")]
+		public async Task Atualizar_test()
+		{
+			//Given(Preparação)
+			using var dbconnection = await new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider).OpenAsync();
+			var baseRepositoryMock = new PagamentoRepository(dbconnection);
+
+			dbconnection.CreateTableIfNotExists<Pagamento>();
+			var expectresult = new AutoFaker<Pagamento>()
+				.RuleFor(fake => fake.Valor, fake => 1)
+				.Generate();
+			
+			await dbconnection.InsertAsync(expectresult);
+			Pagamento compare = dbconnection.Select<Pagamento>().FirstOrDefault();
+			
+			expectresult.Valor = 2; 
+
+			var param = expectresult.ConvertTo<PagamentoEntity>();
+
+			//When
+			await baseRepositoryMock.Atualizar(param);
+			var result = await dbconnection.SingleAsync<Pagamento>(p => p.Id == expectresult.Id);
+
+			//Then
+			Assert.True(result.Valor != compare.Valor);
+		}
+
+		private Pagamento AtribuirClasse(dynamic pagamentos)
 		{
 			List<Dictionary<string, string>> propriedades = RetornarPropriedadesDinamicas(pagamentos);
 			Pagamento retorno = new Pagamento();
