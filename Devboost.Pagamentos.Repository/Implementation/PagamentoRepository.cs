@@ -22,9 +22,23 @@ namespace Devboost.Pagamentos.Repository.Implementation
 		}
 		public async Task Inserir(PagamentoEntity pagamento)
 		{
-			var model = pagamento.ConvertTo<Pagamento>();
-			_connection.CreateTableIfNotExists<Pagamento>();
-			await _connection.SaveAsync(model, references:true);
+			try
+			{
+				var model = pagamento.ConvertTo<Pagamento>();
+				//if (_connection.CreateTableIfNotExists<Pagamento>()) 
+				//{
+				//	_connection.CreateTableIfNotExists<FormaPagamento>();
+				//	_connection.CreateTableIfNotExists<Cartao>();
+				//}
+				_connection.Save(model.FormaPagamento.Cartao);
+				_connection.Save(model.FormaPagamento);
+
+				await _connection.SaveAsync(model);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
 		}
 
 		public async Task<PagamentoEntity> RetornoPagamento(Guid idPedido)

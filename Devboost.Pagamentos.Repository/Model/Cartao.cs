@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Devboost.Pagamentos.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,10 +12,10 @@ namespace Devboost.Pagamentos.Repository.Model
 			Id = Guid.NewGuid();
 		}
 		public Guid Id { get; set; }
-		public string Bandeira { get; set; }
+		public PagamentoBandeiraEnum Bandeira { get; set; }
 		public string NumeroCartao { get; set; }
 		public DateTime DataValidade { get; set; }
 		public string CodSeguranca { get; set; }
-		public string Tipo { get; set; }
+		public TipoCartaoEnum Tipo { get; set; }
 	}
 }

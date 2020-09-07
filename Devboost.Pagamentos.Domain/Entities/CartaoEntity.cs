@@ -5,6 +5,7 @@ namespace Devboost.Pagamentos.Domain.Entities
 {
     public class CartaoEntity
     {
+        public Guid Id { get; set; }
         public PagamentoBandeiraEnum Bandeira { get; set; }
         public string NumeroCartao { get; set; }
         public DateTime DataValidade { get; set; }

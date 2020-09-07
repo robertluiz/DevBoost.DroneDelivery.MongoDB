@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -8,7 +8,16 @@
 
   <ItemGroup>
     <PackageReference Include="AutoBogus" Version="2.10.0" />
+    <PackageReference Include="AutoMoqCore" Version="1.0.0" />
+    <PackageReference Include="Bogus" Version="30.0.4" />
+    <PackageReference Include="CompareNETObjects" Version="4.66.0" />
+    <PackageReference Include="ServiceStack.OrmLite" Version="5.9.2" />
+    <PackageReference Include="ServiceStack.OrmLite.Sqlite" Version="5.9.2" />
+    <PackageReference Include="ServiceStack.OrmLite.SqlServer" Version="5.9.2" />
+    <PackageReference Include="SQLite" Version="3.13.0" />
+    <PackageReference Include="CompareNETObjects" Version="4.66.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="ServiceStack.OrmLite" Version="5.9.2" />
     <PackageReference Include="ServiceStack.Text" Version="5.9.2" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
@@ -17,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Devboost.Pagamentos.Domain\Devboost.Pagamentos.Domain.csproj" />
+    <ProjectReference Include="..\Devboost.Pagamentos.Repository\Devboost.Pagamentos.Repository.csproj" />
   </ItemGroup>
 
 </Project>
