@@ -3,17 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using ServiceStack.DataAnnotations;
 
 namespace Devboost.Pagamentos.Repository.Model
 {
     [Table("dbo.Cartao")]
 	public class Cartao
 	{
-		public Cartao() 
-		{
-			Id = Guid.NewGuid();
-		}
-		public Guid Id { get; set; }
+        public Guid Id { get; set; }
 		public string Nome { get; set; }
 		public PagamentoBandeiraEnum Bandeira { get; set; }
 		public string NumeroCartao { get; set; }

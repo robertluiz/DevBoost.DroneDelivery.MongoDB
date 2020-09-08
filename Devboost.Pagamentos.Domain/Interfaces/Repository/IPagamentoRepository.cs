@@ -6,6 +6,5 @@ namespace Devboost.Pagamentos.Domain.Interfaces.Repository
 {
     public interface IPagamentoRepository : IBaseRepository<PagamentoEntity>
     {
-		Task<PagamentoEntity> GetPagamentoByIdPedido(Guid idPedido);
     }
 }

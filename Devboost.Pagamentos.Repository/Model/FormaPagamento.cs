@@ -9,12 +9,12 @@ namespace Devboost.Pagamentos.Repository.Model
 	[Table("dbo.FormaPagamento")]
 	public class FormaPagamento
 	{
-		public Guid Id { get; set; }
+        public Guid Id { get; set; }
+
+        [Reference]
+		public virtual Cartao Cartao { get; set; }
 
 		[References(typeof(Cartao))]
-		public Guid CartaoID { get; set; }
-		
-		[Reference]
-		public Cartao Cartao { get; set; }
+		public Guid CartaoId { get; set; }
 	}
 }

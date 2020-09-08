@@ -15,6 +15,7 @@ namespace Devboost.Pagamentos.IoC
         {
             AutoMapping.RegisterConverter((CartaoParam from) => {
                 var to = from.ConvertTo<PagamentoEntity>(skipConverters: true);
+                to.Id = Guid.NewGuid();
                 to.FormaPagamento = new FormaPagamentoEntity
                 {
                     Cartao = from.ConvertTo<CartaoEntity>(skipConverters: true)
@@ -31,15 +32,16 @@ namespace Devboost.Pagamentos.IoC
 
             AutoMapping.RegisterConverter((FormaPagamentoEntity from) => {
                 var to = from.ConvertTo<FormaPagamento>(skipConverters: true);
+                if (to == null) return null;
                 to.Id = from.Id ?? Guid.NewGuid();
-                to.CartaoID = to.Cartao.Id;
+                to.CartaoId = to.Cartao.Id;
                 return to;
             });
 
             AutoMapping.RegisterConverter((PagamentoEntity from) => {
                 var to = from.ConvertTo<Pagamento>(skipConverters: true);
                 to.Id = from.Id ?? Guid.NewGuid();
-                to.FormaPagamentoID = to.FormaPagamento.Id;
+                if (to.FormaPagamento != null) to.FormaPagamentoId = to.FormaPagamento.Id;
                 return to;
             });
 
