@@ -53,6 +53,15 @@ namespace Devboost.Pagamentos.Repository.Implementation
             return p.ConvertTo<TEntity>();
         }
 
+        public virtual async Task<TEntity> GetByIDWithLoadRef(Guid id)
+        {
+            _connection.CheckBase();
+
+            var p = await _connection.LoadSingleByIdAsync<TModel>(id);
+
+            return p.ConvertTo<TEntity>();
+        }
+
         public virtual async Task Update(TEntity obj)
         {
             var model = obj.ConvertTo<TModel>();

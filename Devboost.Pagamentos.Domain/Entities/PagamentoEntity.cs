@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Devboost.Pagamentos.Domain.Enums;
+﻿using Devboost.Pagamentos.Domain.Enums;
 using Devboost.Pagamentos.Domain.Interfaces.Entity;
+using System;
+using System.Collections.Generic;
 
 namespace Devboost.Pagamentos.Domain.Entities
 {
@@ -10,10 +9,12 @@ namespace Devboost.Pagamentos.Domain.Entities
     {
         public Guid? Id { get; set; }
         public Guid IdPedido { get; set; }
-        public float Valor { get; set; }      
+        public float Valor { get; set; }
 
         public StatusPagamentoEnum StatusPagamento { get; set; }
-        public FormaPagamentoEntity FormaPagamento { get; set; }
+        public CartaoEntity Cartao { get; set; }
+
+        public BoletoEntity Boleto { get; set; }
 
         public List<string> Validar()
         {
@@ -22,10 +23,11 @@ namespace Devboost.Pagamentos.Domain.Entities
             ValidaIdPedido(result);
             ValidaValor(result);
 
-            var listErrosFormaPagmto = FormaPagamento.Validar();
+            if (Cartao != null)
+                result.AddRange(Cartao.Validar());
 
-            if(listErrosFormaPagmto.Count() > 0)
-                result.AddRange(listErrosFormaPagmto);
+            if (Boleto != null)
+                result.AddRange(Boleto.Validar());
 
             return result;
         }

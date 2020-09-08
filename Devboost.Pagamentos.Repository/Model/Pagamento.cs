@@ -1,26 +1,32 @@
-﻿using ServiceStack.DataAnnotations;
+﻿using Devboost.Pagamentos.Domain.Enums;
+using ServiceStack.DataAnnotations;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using Devboost.Pagamentos.Domain.Enums;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Devboost.Pagamentos.Repository.Model
 {
-	[Table("dbo.Pagamento")]
-	public class Pagamento
-	{
+    [Alias("Pagamento")]
+    public class Pagamento
+    {
+        [AutoId]
+        [PrimaryKey]
+        [NotNull]
+        public Guid? Id { get; set; }
 
-		public Guid Id { get; set; }        
-
-		public Guid IdPedido { get; set; }
+        public Guid IdPedido { get; set; }
         public StatusPagamentoEnum StatusPagamento { get; set; }
-		public float Valor { get; set; }
-        [Reference]
-        public virtual FormaPagamento FormaPagamento { get; set; }
+        public float Valor { get; set; }
 
-        [References(typeof(FormaPagamento))]
-		public Guid FormaPagamentoId { get; set; }
-		
-	}
+        [Reference]
+        public virtual Cartao Cartao { get; set; }
+        
+        [ForeignKey(typeof(Cartao))]
+        public Guid? CartaoId { get; set; }
+
+        [Reference]
+        public virtual Boleto Boleto { get; set; }
+
+        [ForeignKey(typeof(Boleto))]
+        public Guid? BoletoId { get; set; }
+    }
 }

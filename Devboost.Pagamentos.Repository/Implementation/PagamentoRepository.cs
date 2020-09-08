@@ -26,13 +26,9 @@ namespace Devboost.Pagamentos.Repository.Implementation
 
             var model = pagamento.ConvertTo<Pagamento>(); 
             _connection.CheckBase();
-
-            await _connection.SaveAsync(model.FormaPagamento.Cartao);
-            await _connection.SaveAsync(model.FormaPagamento, references: true);
-            await _connection.SaveAsync(model, references: true);
-
-
-        }
+			
+            await _connection.SaveAsync(model, references: true);			
+		}
 
 	}
 

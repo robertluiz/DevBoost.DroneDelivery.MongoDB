@@ -16,32 +16,17 @@ namespace Devboost.Pagamentos.IoC
             AutoMapping.RegisterConverter((CartaoParam from) => {
                 var to = from.ConvertTo<PagamentoEntity>(skipConverters: true);
                 to.Id = Guid.NewGuid();
-                to.FormaPagamento = new FormaPagamentoEntity
-                {
-                    Cartao = from.ConvertTo<CartaoEntity>(skipConverters: true)
-                };
+                to.Cartao = from.ConvertTo<CartaoEntity>(skipConverters: true);
                 return to;
             });
-
 
             AutoMapping.RegisterConverter((CartaoEntity from) => {
-                var to = from.ConvertTo<Cartao>(skipConverters: true);
-                to.Id = from.Id ?? Guid.NewGuid();
-                return to;
-            });
-
-            AutoMapping.RegisterConverter((FormaPagamentoEntity from) => {
-                var to = from.ConvertTo<FormaPagamento>(skipConverters: true);
-                if (to == null) return null;
-                to.Id = from.Id ?? Guid.NewGuid();
-                to.CartaoId = to.Cartao.Id;
+                var to = from.ConvertTo<Cartao>(skipConverters: true);                
                 return to;
             });
 
             AutoMapping.RegisterConverter((PagamentoEntity from) => {
                 var to = from.ConvertTo<Pagamento>(skipConverters: true);
-                to.Id = from.Id ?? Guid.NewGuid();
-                if (to.FormaPagamento != null) to.FormaPagamentoId = to.FormaPagamento.Id;
                 return to;
             });
 

@@ -13,6 +13,8 @@ namespace Devboost.Pagamentos.Domain.Interfaces.Repository
 
         Task<TEntity> GetByID(Guid id);
 
+        Task<TEntity> GetByIDWithLoadRef(Guid id);
+
         Task Update(TEntity obj);
         
     }

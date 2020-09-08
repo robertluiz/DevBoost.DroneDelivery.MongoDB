@@ -36,9 +36,11 @@ namespace Devboost.Pagamentos.DomainService.Commands
 
             var confirmacaoPagamento = await _gatewayExternalService.EfetuaPagamento(pagamento);
             await _deliveryExternalService.SinalizaStatusPagamento(confirmacaoPagamento);
-            
-            pagamento.StatusPagamento = confirmacaoPagamento.StatusPagamento;
-            await _pagamentoRepository.Update(pagamento);
+
+            var retornoPagamento = await _pagamentoRepository.GetByIDWithLoadRef(pagamento.Id.GetValueOrDefault());
+
+            retornoPagamento.StatusPagamento = confirmacaoPagamento.StatusPagamento;
+            await _pagamentoRepository.AddUsingRef(retornoPagamento);
 
             return erros;
         }
