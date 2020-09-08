@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Devboost.DroneDelivery.Domain.Enums;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Devboost.DroneDelivery.Repository.Models
@@ -21,5 +22,6 @@ namespace Devboost.DroneDelivery.Repository.Models
         public double DistanciaDaEntrega { get; set; }
         public Guid DroneId { get; set; }
         public Guid CompradorId { get; set; }
+        public StatusPagamentoEnum StatusPagamento { get; set; }
     }
 }

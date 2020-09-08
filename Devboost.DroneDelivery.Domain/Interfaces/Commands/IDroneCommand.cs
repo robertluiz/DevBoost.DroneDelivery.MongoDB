@@ -9,6 +9,7 @@ namespace Devboost.DroneDelivery.Domain.Interfaces.Commands
     {
         Task<DroneEntity> SelecionarDrone(PedidoEntity pedido);
         Task LiberaDrone();
+        Task LiberaDroneByStatusPagamentoPedido(PedidoEntity pedido);
         Task AtualizaDrone(DroneEntity drone);
     }
 }

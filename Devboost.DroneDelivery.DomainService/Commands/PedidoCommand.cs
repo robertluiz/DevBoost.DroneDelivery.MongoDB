@@ -68,5 +68,10 @@ namespace Devboost.DroneDelivery.DomainService.Commands
         {
             return await _pedidosRepository.GetAll();
         }
+
+        public async Task<PedidoEntity> GetById(Guid pedidoId)
+        {
+            return await _pedidosRepository.GetByID(pedidoId);
+        }
     }
 }

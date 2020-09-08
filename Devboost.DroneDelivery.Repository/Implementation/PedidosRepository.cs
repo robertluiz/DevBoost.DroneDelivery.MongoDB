@@ -30,6 +30,16 @@ namespace Devboost.DroneDelivery.Repository.Implementation
 
         }
 
+        public async Task<PedidoEntity> GetByID(Guid pedidoId)
+        {
+
+            _connection.CreateTableIfNotExists<Pedido>();
+            var p = await _connection.SingleByIdAsync<Pedido>(pedidoId);
+
+            return p.ConvertTo<PedidoEntity>();
+
+        }
+
         public async Task<List<PedidoEntity>> GetByDroneID(Guid droneId)
         {
             

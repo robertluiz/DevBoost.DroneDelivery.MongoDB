@@ -17,6 +17,7 @@ namespace Devboost.DroneDelivery.Domain.Entities
         public Guid DroneId { get; set; }
         public Guid CompradorId { get; set; }
         public double DistanciaDaEntrega { get; set; }
+        public StatusPagamentoEnum StatusPagamento { get; set; }
 
         public readonly double DistanciaMaxima = 17000;
         public readonly int PesoGramasMaximo = 12000;

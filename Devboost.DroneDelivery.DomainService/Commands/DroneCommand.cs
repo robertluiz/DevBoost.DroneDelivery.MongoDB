@@ -77,6 +77,25 @@ namespace Devboost.DroneDelivery.DomainService.Commands
             }
         }
 
+        public async Task LiberaDroneByStatusPagamentoPedido(PedidoEntity pedido)
+        {
+
+            var d = await _dronesRepository.GetByID(pedido.DroneId);
+            var listpedidos = await _pedidosRepository.GetByDroneID(d.Id);
+
+            var temPedidoComStatusPagamentoDiferenteDeAprov = listpedidos.Exists(e => e.StatusPagamento != StatusPagamentoEnum.Aprovado && e.Id != pedido.Id);
+
+            if (!temPedidoComStatusPagamentoDiferenteDeAprov) //Se não tem  nenhum pedido vinculado ao Drone com seu status pagamento pendente de APROVADO, então não posso liberar o Drone
+            {
+                pedido.Status = PedidoStatus.EmTransito.ToString();                
+                await _pedidosRepository.Atualizar(pedido);                
+
+                d.Status = DroneStatus.EmTransito;
+                d.DataAtualizacao = DateTime.Now;
+                await AtualizaDrone(d);
+            }
+        }
+
 
         public async Task AtualizaDrone(DroneEntity drone)
         {

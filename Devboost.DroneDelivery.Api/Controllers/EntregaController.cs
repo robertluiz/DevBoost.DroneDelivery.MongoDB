@@ -1,4 +1,5 @@
-﻿using Devboost.DroneDelivery.Domain.Interfaces.Commands;
+﻿using Devboost.DroneDelivery.Domain.DTOs;
+using Devboost.DroneDelivery.Domain.Interfaces.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,22 @@ namespace Devboost.DroneDelivery.Api.Controllers
             catch (Exception e)
             {
               return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+
+            }
+
+        }
+
+        [HttpPost("Inicia/Pedido")]        
+        public async Task<IActionResult> IniciaEntregaByPedido([FromBody] DeliveryExternalParam param)
+        {
+            try
+            {
+                await _entregaCommand.IniciaByPedido(param);
+                return Ok("Entrega iniciada!");
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
 
             }
 

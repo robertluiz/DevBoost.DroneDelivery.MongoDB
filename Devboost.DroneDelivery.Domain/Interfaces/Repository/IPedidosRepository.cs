@@ -9,6 +9,7 @@ namespace Devboost.DroneDelivery.Domain.Interfaces.Repository
     public interface IPedidosRepository
     {
         Task<List<PedidoEntity>> GetAll();
+        Task<PedidoEntity> GetByID(Guid pedidoId);
         Task<List<PedidoEntity>> GetByDroneID(Guid droneId);
         Task<List<PedidoEntity>> GetByDroneIDAndStatus(Guid droneId, PedidoStatus status);
         Task<PedidoEntity> GetSingleByDroneID(Guid droneId);
