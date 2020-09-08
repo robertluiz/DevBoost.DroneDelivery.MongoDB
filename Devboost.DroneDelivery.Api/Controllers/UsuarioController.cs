@@ -28,9 +28,7 @@ namespace Devboost.DroneDelivery.Api.Controllers
         {
             try
             {
-                var resultado = await _usuarioCommand.Criar(user);
-                if (!resultado)
-                    return BadRequest("Usuário não cadastrado");
+                await _usuarioCommand.Criar(user);
                 return Ok("Usuário cadastrado com sucesso!");
             }
             catch (Exception e)

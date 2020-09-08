@@ -29,7 +29,7 @@ namespace Devboost.DroneDelivery.Tests.API
 
             var param = faker.Generate<UsuarioParam>();
 
-            var response = true;
+            var response = string.Empty;
 
             var responseTask = Task.Factory.StartNew(() => response);
 
@@ -47,35 +47,7 @@ namespace Devboost.DroneDelivery.Tests.API
             Assert.True(comparison.Compare(result, expectResponse).AreEqual);
         }
 
-        [Fact]
-        public async void Cadastrar_test_BadRequest()
-        {
-            //Given
-            var mocker = new AutoMoqer();
-            var baseControllerMock = mocker.Create<UsuarioController>();
-
-            var faker = AutoFaker.Create();
-
-            var param = new UsuarioParam() { Nome = "", Senha = ""};
-
-            var response = false;
-
-            var responseTask = Task.Factory.StartNew(() => response);
-
-            var expectResponse = baseControllerMock.BadRequest("Usuário não cadastrado");
-
-            var service = mocker.GetMock<IUsuarioCommand>();
-            service.Setup(r => r.Criar(param)).Returns(responseTask).Verifiable();
-
-            //When
-            var result = await baseControllerMock.Cadastrar(param);
-
-            //Then
-            var comparison = new CompareLogic();
-            service.Verify(mock => mock.Criar(param), Times.Once());
-            Assert.True(comparison.Compare(result, expectResponse).AreEqual);
-        }
-
+      
         [Fact]
         public async void Cadastrar_test_InternalServerError()
         {
