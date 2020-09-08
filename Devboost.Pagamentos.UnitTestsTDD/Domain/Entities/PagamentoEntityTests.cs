@@ -17,7 +17,6 @@ namespace Devboost.Pagamentos.UnitTestsTDD.Domain.Entities
         public void ValidarDadosPagamento_Test_Sucesso()
         {
             //Given
-            var commandMock = new Mock<IEntity>();
 
             var cartaoEntity = new AutoFaker<CartaoEntity>()
                                     .RuleFor(Faker => Faker.Bandeira, fake => PagamentoBandeiraEnum.MasterCard)
@@ -45,7 +44,7 @@ namespace Devboost.Pagamentos.UnitTestsTDD.Domain.Entities
         public void ValidarDadosPagamento_Test_Erro()
         {
             //Given
-            var commandMock = new Mock<IEntity>();
+ 
 
             var cartaoEntity = new AutoFaker<CartaoEntity>()
                                     .RuleFor(Faker => Faker.Bandeira, fake => PagamentoBandeiraEnum.MasterCard)
@@ -65,7 +64,7 @@ namespace Devboost.Pagamentos.UnitTestsTDD.Domain.Entities
 
             var result = param.Validar();
 
-            Assert.True(result.Count > 0);
+            Assert.True(result.Count == 2);
         }
     }
 }

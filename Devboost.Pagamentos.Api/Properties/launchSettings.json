@@ -14,7 +14,8 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "GATEWAY__URL": "https://5f5640c432f56200168bd249.mockapi.io/bankJVM/v1/gateway"
       }
     },
     "Devboost.Pagamentos.Api": {
@@ -23,7 +24,8 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "GATEWAY__URL": "https://5f5640c432f56200168bd249.mockapi.io/bankJVM/v1/gateway"
       }
     }
   }

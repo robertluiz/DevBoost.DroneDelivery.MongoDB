@@ -5,6 +5,7 @@ using Devboost.DroneDelivery.Domain.Interfaces.Repository;
 using Devboost.DroneDelivery.Domain.Params;
 using System;
 using System.Threading.Tasks;
+using ServiceStack;
 
 namespace Devboost.DroneDelivery.DomainService.Commands
 {
@@ -18,7 +19,7 @@ namespace Devboost.DroneDelivery.DomainService.Commands
             _usuariosRepository = usuariosRepository;
         }        
 
-        public async Task<bool> Criar(UsuarioParam user)
+        public async Task Criar(UsuarioParam user)
         {
 
             var hasRole = Enum.TryParse<RoleEnum>(user.Role, true, out RoleEnum roleUser);
@@ -27,11 +28,15 @@ namespace Devboost.DroneDelivery.DomainService.Commands
                 throw new Exception("Perfil não encontrado!");
 
 
-            UsuarioEntity u = new UsuarioEntity {  Id = Guid.NewGuid(), Login = user.Login, Senha = user.Senha, Nome = user.Nome, DataCadastro = DateTime.Now, Role = roleUser, Latitude = user.Latitude, Longitude = user.Longitude };
+            var usuario = user.ConvertTo<UsuarioEntity>();
+            usuario.DataCadastro = DateTime.Now;
 
-            await _usuariosRepository.Inserir(u);
+            usuario.Role = roleUser;
+            usuario.Id = Guid.NewGuid();
 
-            return true;
+            await _usuariosRepository.Inserir(usuario);
+
+
         }
     }
 }

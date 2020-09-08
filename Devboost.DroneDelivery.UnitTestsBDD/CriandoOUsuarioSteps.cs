@@ -56,8 +56,8 @@ namespace Devboost.DroneDelivery.UnitTestsBDD
                 .RuleFor(fake => fake.Role, fake => RoleEnum.Administrador.ToString())
                 .Generate();
 
-            var result = await _usuarioCommand.Criar(usuario);
-            _scenarioContext.Add("FinalResult", result);
+            await _usuarioCommand.Criar(usuario);
+            _scenarioContext.Add("FinalResult", true);
         }
 
         [Then(@"se for cadastrado com sucesso o resultado será (.*)")]

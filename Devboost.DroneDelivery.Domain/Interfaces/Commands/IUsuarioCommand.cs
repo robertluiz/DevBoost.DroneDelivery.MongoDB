@@ -6,6 +6,6 @@ namespace Devboost.DroneDelivery.Domain.Interfaces.Commands
 {
     public interface IUsuarioCommand
     {
-        Task<bool> Criar(UsuarioParam user);
+        Task Criar(UsuarioParam user);
     }
 }
