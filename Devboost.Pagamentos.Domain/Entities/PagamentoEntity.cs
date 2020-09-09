@@ -34,7 +34,7 @@ namespace Devboost.Pagamentos.Domain.Entities
 
         public void ValidaIdPedido(List<string> listErros)
         {
-            if (IdPedido == null)
+            if (IdPedido == Guid.Empty)
                 listErros.Add("IdPedido vazio!");
         }
 

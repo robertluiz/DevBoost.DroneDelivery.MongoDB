@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoBogus;
 using AutoMoqCore;
@@ -13,7 +14,6 @@ using Devboost.Pagamentos.IoC;
 using KellermanSoftware.CompareNetObjects;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using ServiceStack;
 using Xunit;
 
 namespace Devboost.Pagamentos.UnitTestsTDD.DomainService.Commands
@@ -48,7 +48,7 @@ namespace Devboost.Pagamentos.UnitTestsTDD.DomainService.Commands
                 StatusPagamento = StatusPagamentoEnum.Aprovado
             };
 
-
+            var pagamentoResult = new AutoFaker<PagamentoEntity>().Generate();
             var expectResponse = new List<string>();
 
             var pagamentoRepoMock = mocker.GetMock<IPagamentoRepository>();
@@ -57,7 +57,7 @@ namespace Devboost.Pagamentos.UnitTestsTDD.DomainService.Commands
             var deliveryMock = mocker.GetMock<IDeliveryExternalService>();
             pagamentoRepoMock.Setup(r => r.AddUsingRef(It.IsAny<PagamentoEntity>())).Returns(Task.Factory.StartNew(()=> string.Empty)).Verifiable();
            
-            pagamentoRepoMock.Setup(r => r.Update(It.IsAny<PagamentoEntity>())).Returns(Task.Factory.StartNew(()=> string.Empty)).Verifiable();
+            pagamentoRepoMock.Setup(r => r.GetByIDWithLoadRef(It.IsAny<Guid>())).ReturnsAsync(pagamentoResult).Verifiable();
             
             deliveryMock.Setup(r => r.SinalizaStatusPagamento(It.IsAny<GatewayDTO>())).Returns(Task.Factory.StartNew(()=> string.Empty)).Verifiable();
             gatewayMock.Setup(r => r.EfetuaPagamento(It.IsAny<PagamentoEntity>())).ReturnsAsync(returnGateway).Verifiable();
@@ -70,8 +70,8 @@ namespace Devboost.Pagamentos.UnitTestsTDD.DomainService.Commands
 
             //Then
 
-            pagamentoRepoMock.Verify(mock => mock.AddUsingRef(It.IsAny<PagamentoEntity>()), Times.Once());
-            pagamentoRepoMock.Verify(mock => mock.Update(It.IsAny<PagamentoEntity>()), Times.Once());
+            pagamentoRepoMock.Verify(mock => mock.AddUsingRef(It.IsAny<PagamentoEntity>()), Times.Exactly(2));
+            pagamentoRepoMock.Verify(mock => mock.GetByIDWithLoadRef(It.IsAny<Guid>()), Times.Once());
            
             deliveryMock.Verify(mock => mock.SinalizaStatusPagamento(It.IsAny<GatewayDTO>()), Times.Once());
             gatewayMock.Verify(mock => mock.EfetuaPagamento(It.IsAny<PagamentoEntity>()), Times.Once());

@@ -13,7 +13,6 @@ namespace Devboost.Pagamentos.Repository.Tools
             
             con.CreateTableIfNotExists<Cartao>();
             con.CreateTableIfNotExists<Boleto>();
-            //con.CreateTableIfNotExists<FormaPagamento>();
             con.CreateTableIfNotExists<Pagamento>();
 
         }
