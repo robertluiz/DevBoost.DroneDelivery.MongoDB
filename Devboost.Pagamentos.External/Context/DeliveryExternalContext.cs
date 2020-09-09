@@ -15,7 +15,7 @@ namespace Devboost.Pagamentos.External.Context
             _config = config;
         }
 
-        public async Task AtualizaStatusPagamento(DeliveryExternalParam deliverypParam)
+        public virtual async Task AtualizaStatusPagamento(DeliveryExternalParam deliverypParam)
         {
             var url = $"{_config.DeliveryUrl}/entrega/inicia/pedido";
             await url.PostJsonAsync(deliverypParam)

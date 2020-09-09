@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using Xunit;
 
-namespace Devboost.DroneDelivery.UnitTestsBDD
+namespace Devboost.DroneDelivery.UnitTestsBDD.Historias.NaCriacaoDoPedidoSelecionaDrone
 {
     [Binding]
     public class NaCriacaoDoPedidoSelecionarODroneSteps

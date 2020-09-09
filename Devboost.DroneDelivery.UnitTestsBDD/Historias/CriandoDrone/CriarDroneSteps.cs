@@ -2,7 +2,7 @@
 using TechTalk.SpecFlow;
 using Xunit;
 
-namespace Devboost.DroneDelivery.UnitTestsBDD
+namespace Devboost.DroneDelivery.UnitTestsBDD.Historias.CriandoDrone
 {
     [Binding]
     public class CriarDroneSteps
