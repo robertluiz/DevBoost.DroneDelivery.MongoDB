@@ -12,7 +12,7 @@ namespace Devboost.Pagamentos.Domain.Entities
 
         public List<string> Validar()
         {
-            throw new NotImplementedException();
+            return new List<string>();
         }
 
         #region ValidaValores
