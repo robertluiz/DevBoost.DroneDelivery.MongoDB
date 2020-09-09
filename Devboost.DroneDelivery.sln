@@ -51,6 +51,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Infra", "3 - Infra", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Tests", "4 - Tests", "{3EADE89E-3B7C-4C84-B8AC-747EE4172E00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devboost.Pagamentos.UnitTestsBDD", "Devboost.Pagamentos.UnitTestsBDD\Devboost.Pagamentos.UnitTestsBDD.csproj", "{3C9CD6AE-6D17-4807-974D-679B27F73F6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,10 @@ Global
 		{30A0F3D9-F592-43B0-90CA-0A3F9EE8F735}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30A0F3D9-F592-43B0-90CA-0A3F9EE8F735}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30A0F3D9-F592-43B0-90CA-0A3F9EE8F735}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C9CD6AE-6D17-4807-974D-679B27F73F6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C9CD6AE-6D17-4807-974D-679B27F73F6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C9CD6AE-6D17-4807-974D-679B27F73F6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C9CD6AE-6D17-4807-974D-679B27F73F6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -140,6 +146,7 @@ Global
 		{2CD247B2-7FB3-4A1C-896A-898DF5180D18} = {55984A5E-5BEF-43BF-806B-0241A7C6D2D8}
 		{38B496A7-2860-4246-AE4B-9699CF6C2160} = {55984A5E-5BEF-43BF-806B-0241A7C6D2D8}
 		{3EADE89E-3B7C-4C84-B8AC-747EE4172E00} = {55984A5E-5BEF-43BF-806B-0241A7C6D2D8}
+		{3C9CD6AE-6D17-4807-974D-679B27F73F6C} = {36C2BA87-3799-4D3D-8217-35D041763F10}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8B2AD133-1884-428B-8FC3-53615F5B6547}

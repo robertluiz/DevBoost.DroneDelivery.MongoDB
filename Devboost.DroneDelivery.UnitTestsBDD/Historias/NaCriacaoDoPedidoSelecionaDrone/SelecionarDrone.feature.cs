@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Devboost.DroneDelivery.UnitTestsBDD
+namespace Devboost.DroneDelivery.UnitTestsBDD.Historias.NaCriacaoDoPedidoSelecionaDrone
 {
     using TechTalk.SpecFlow;
     using System;
@@ -19,7 +19,7 @@ namespace Devboost.DroneDelivery.UnitTestsBDD
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.4.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class CriarDroneFeature : object, Xunit.IClassFixture<CriarDroneFeature.FixtureData>, System.IDisposable
+    public partial class NaCriacaoDoPedidoSelecionarODroneFeature : object, Xunit.IClassFixture<NaCriacaoDoPedidoSelecionarODroneFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Devboost.DroneDelivery.UnitTestsBDD
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "CriarDrone.feature"
+#line 1 "SelecionarDrone.feature"
 #line hidden
         
-        public CriarDroneFeature(CriarDroneFeature.FixtureData fixtureData, Devboost_DroneDelivery_UnitTestsBDD_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public NaCriacaoDoPedidoSelecionarODroneFeature(NaCriacaoDoPedidoSelecionarODroneFeature.FixtureData fixtureData, Devboost_DroneDelivery_UnitTestsBDD_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,9 @@ namespace Devboost.DroneDelivery.UnitTestsBDD
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("pt-BR"), "", "CriarDrone", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("pt-BR"), "Historias/NaCriacaoDoPedidoSelecionaDrone", "Na criação do pedido selecionar o drone", "\t\t\t\tque esteja com disponibilidade, capacidade e autonômia suficiente\r\n\t\t\t\tcom ba" +
+                    "se nos parâmetros de entrada do pedido\r\n\t\t\t\ttais como peso e distância de entreg" +
+                    "a do comprador", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,15 +82,18 @@ namespace Devboost.DroneDelivery.UnitTestsBDD
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Add two numbers")]
-        [Xunit.TraitAttribute("FeatureTitle", "CriarDrone")]
-        [Xunit.TraitAttribute("Description", "Add two numbers")]
-        public virtual void AddTwoNumbers()
+        [Xunit.SkippableFactAttribute(DisplayName="Na criação do pedido selecionar o drone com base na sua disponibilidade, capacida" +
+            "de e autonômia")]
+        [Xunit.TraitAttribute("FeatureTitle", "Na criação do pedido selecionar o drone")]
+        [Xunit.TraitAttribute("Description", "Na criação do pedido selecionar o drone com base na sua disponibilidade, capacida" +
+            "de e autonômia")]
+        public virtual void NaCriacaoDoPedidoSelecionarODroneComBaseNaSuaDisponibilidadeCapacidadeEAutonomia()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add two numbers", null, tagsOfScenario, argumentsOfScenario);
-#line 3
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Na criação do pedido selecionar o drone com base na sua disponibilidade, capacida" +
+                    "de e autonômia", null, tagsOfScenario, argumentsOfScenario);
+#line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -108,17 +113,18 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 4
- testRunner.Given("the first number is 50", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
-#line hidden
-#line 5
- testRunner.And("the second number is 70", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
-#line hidden
-#line 6
- testRunner.When("the two numbers are added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
-#line hidden
 #line 7
- testRunner.Then("the result should be 120", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+ testRunner.Given("um pedido com peso total de 8000 gramas", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line hidden
+#line 8
+ testRunner.And("com destino de entrega com distância prevista para 3.500 metros", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+#line 9
+ testRunner.When("o pedido for inserido o drone selecionado deverá ao final corresponder aos critér" +
+                        "ios definidos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line hidden
+#line 10
+ testRunner.Then("se o pedido foi inserido corretamente a seleção do drone deve ser True", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -131,12 +137,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                CriarDroneFeature.FeatureSetup();
+                NaCriacaoDoPedidoSelecionarODroneFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                CriarDroneFeature.FeatureTearDown();
+                NaCriacaoDoPedidoSelecionarODroneFeature.FeatureTearDown();
             }
         }
     }

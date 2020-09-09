@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using Xunit;
 
-namespace Devboost.DroneDelivery.UnitTestsBDD
+namespace Devboost.DroneDelivery.UnitTestsBDD.Historias.CriandoUsuario
 {
     [Binding]
     public class CriandoOUsuarioSteps

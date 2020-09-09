@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Devboost.DroneDelivery.UnitTestsBDD
+namespace Devboost.DroneDelivery.UnitTestsBDD.Historias.CriandoUsuario
 {
     using TechTalk.SpecFlow;
     using System;
@@ -40,7 +40,7 @@ namespace Devboost.DroneDelivery.UnitTestsBDD
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("pt-BR"), "", "Criando o usuário", "\tNa criação do usuário \r\n\té necessário passar \r\n\tLogin e Senha", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("pt-BR"), "Historias/CriandoUsuario", "Criando o usuário", "\tNa criação do usuário \r\n\té necessário passar \r\n\tLogin e Senha", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         

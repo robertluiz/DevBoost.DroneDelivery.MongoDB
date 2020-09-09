@@ -19,7 +19,6 @@ namespace Devboost.Pagamentos.UnitTestsTDD.Repository
         private readonly IAutoFaker _faker;
         private readonly CompareLogic _comparison;
 
-
         public PagamentoRepositoryTests()
         {
             _faker = AutoFaker.Create();
@@ -75,11 +74,12 @@ namespace Devboost.Pagamentos.UnitTestsTDD.Repository
         }
 
 
+
         [Fact(DisplayName = "Update")]
         [Trait("PagamentoRepositoryTests", "Repository Tests")]
         public async Task Update_test()
         {
-            //Given(Preparação)
+            //Given(Preparaï¿½ï¿½o)
             using var dbconnection = await new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider).OpenAsync();
             var baseRepositoryMock = new PagamentoRepository(dbconnection);
 
@@ -91,7 +91,6 @@ namespace Devboost.Pagamentos.UnitTestsTDD.Repository
             var paramInit = Expectresult();
             await dbconnection.SaveAsync(paramInit, references: true);
             var expectresult = (await dbconnection.SelectAsync<Pagamento>()).FirstNonDefault();
-
 
             expectresult.Valor = 2;
 

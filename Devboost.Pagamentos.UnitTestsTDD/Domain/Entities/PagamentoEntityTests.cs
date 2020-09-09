@@ -59,5 +59,18 @@ namespace Devboost.Pagamentos.UnitTestsTDD.Domain.Entities
 
             Assert.True(result.Count == 2);
         }
+
+
+        [Fact(DisplayName = "Validar dados pagamento contendo todos Erros")]
+        [Trait("PagamentoEntityTests", "Entities Tests")]
+        public void ValidarDadosPagamento_Test_TodosErros()
+        {
+            //Given
+            var param = new PagamentoEntity() { Cartao = new CartaoEntity() };
+
+            var result = param.Validar();
+
+            Assert.True(result.Count == 8);
+        }
     }
 }
