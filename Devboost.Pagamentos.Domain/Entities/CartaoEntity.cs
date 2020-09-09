@@ -9,12 +9,12 @@ namespace Devboost.Pagamentos.Domain.Entities
     public class CartaoEntity : IEntity
     {
         public Guid? Id { get; set; }
-        public PagamentoBandeiraEnum Bandeira { get; set; }
+        public PagamentoBandeiraEnum? Bandeira { get; set; }
         public string Nome { get; set; }
         public string NumeroCartao { get; set; }
         public DateTime DataValidade { get; set; }
         public string CodSeguranca { get; set; }
-        public TipoCartaoEnum Tipo { get; set; }
+        public TipoCartaoEnum? Tipo { get; set; }
         public List<string> Validar()
         {
             var result = new List<string>();
@@ -33,7 +33,7 @@ namespace Devboost.Pagamentos.Domain.Entities
 
         public void ValidaBandeira(List<string> listErros)
         {
-            if (!Enum.IsDefined(typeof(PagamentoBandeiraEnum), Bandeira))
+            if (!Enum.TryParse(typeof(PagamentoBandeiraEnum), (Bandeira.HasValue ? Bandeira.Value.ToString() : ""), ignoreCase: true, out object result))
                 listErros.Add(string.Format("Bandeira não corresponde com o valores: {0} esperados!", HelperEnum.GetStringByEnumType<PagamentoBandeiraEnum>()));
         }
 
@@ -63,7 +63,7 @@ namespace Devboost.Pagamentos.Domain.Entities
 
         public void ValidaTipoCartao(List<string> listErros)
         {
-            if (!Enum.IsDefined(typeof(TipoCartaoEnum), Tipo))
+            if (!Enum.TryParse(typeof(TipoCartaoEnum), (Tipo.HasValue ? Tipo.Value.ToString() : ""), ignoreCase: true, out object result))                
                 listErros.Add(string.Format("Tipo de cartão não corresponde com o valores: {0} esperados!", HelperEnum.GetStringByEnumType<TipoCartaoEnum>()));
         }
 
