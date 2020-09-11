@@ -20,6 +20,8 @@
     <PackageReference Include="AutoMoqCore" Version="1.0.0" />
     <PackageReference Include="Bogus" Version="30.0.4" />
     <PackageReference Include="CompareNETObjects" Version="4.66.0" />
+	<PackageReference Include="Flurl" Version="2.8.2" />
+	<PackageReference Include="Flurl.Http" Version="1.0.3" />
     <PackageReference Include="ServiceStack.OrmLite" Version="5.9.2" />
     <PackageReference Include="ServiceStack.OrmLite.Sqlite" Version="5.9.2" />
     <PackageReference Include="ServiceStack.OrmLite.SqlServer" Version="5.9.2" />
