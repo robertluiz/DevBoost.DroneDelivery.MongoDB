@@ -37,8 +37,6 @@ namespace Devboost.DroneDelivery.DomainService.Commands
 
             //calculoDistancia
             novoPedido.DistanciaDaEntrega = GeolocalizacaoService.CalcularDistanciaEmMetro(userDono.Latitude, userDono.Longitude);
-            //var distanciaEmMilhas = GeolocalizacaoService.distance(pedido.Latitude, pedido.Longitude, 'M');
-            //var distanciaEmMilhasNauticas = GeolocalizacaoService.distance(pedido.Latitude, pedido.Longitude, 'N');
 
             if (!novoPedido.ValidaPedido())
                 return false;

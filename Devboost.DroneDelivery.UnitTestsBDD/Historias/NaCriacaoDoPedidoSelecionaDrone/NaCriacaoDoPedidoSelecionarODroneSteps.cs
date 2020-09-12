@@ -63,8 +63,7 @@ namespace Devboost.DroneDelivery.UnitTestsBDD.Historias.NaCriacaoDoPedidoSelecio
             await _usuariosRepository.Inserir(newUser);
 
             var pedido = new AutoFaker<PedidoParam>()
-                .RuleFor(fake => fake.Peso, fake => pesoGramas)
-                .RuleFor(fake => fake.DistanciaEmMetros, fake => distanciaMetros)
+                .RuleFor(fake => fake.Peso, fake => pesoGramas)                
                 .RuleFor(fake => fake.Login, fake => login)
                 .Generate();
 

@@ -1,0 +1,311 @@
+{
+	"info": {
+		"_postman_id": "3b1c0f3c-b321-4f7c-ad1a-be9f67ada8a9",
+		"name": "Testes API DroneDelivery",
+		"description": "Fazer o consumo da API DroneDelivery",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://localhost:44332/v1/usuario/cadastrar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"Nome\": \"Jonathan\",\r\n\"Login\": \"menezes\",\r\n\"Senha\": \"123456\",\r\n\"Role\": \"Administrador\",\r\n\"Latitude\": -23.592806,\r\n\"Longitude\": -46.674925\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44332/v1/usuario/cadastrar",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44332",
+					"path": [
+						"v1",
+						"usuario",
+						"cadastrar"
+					]
+				},
+				"description": "Cadastrar usuário"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44332/v1/usuario/list",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1lbmV6ZXMiLCJyb2xlIjoiQWRtaW5pc3RyYWRvciIsIm5iZiI6MTU5OTI1OTkwNywiZXhwIjoxNTk5MjYzNTA3LCJpYXQiOjE1OTkyNTk5MDcsImlzcyI6ImFwaS1kZXYtYm9vc3QtRHJvbmVEZWxpdmVyeSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3QifQ.k0op9FOfmZEYhQa5D8IIURAD4zLDhcB_SuA6WZIoWK0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44332/v1/usuario/list",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44332",
+					"path": [
+						"v1",
+						"usuario",
+						"list"
+					]
+				},
+				"description": "Listar usuários"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44332/v1/auth",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"Login\": \"menezes\",\r\n\"Senha\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44332/v1/auth",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44332",
+					"path": [
+						"v1",
+						"auth"
+					]
+				},
+				"description": "Resgatar o Bearer Token a partir dos dados de um usuário "
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44332/v1/pedido/cadastrar",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1lbmV6ZXMiLCJyb2xlIjoiQWRtaW5pc3RyYWRvciIsIm5iZiI6MTU5OTI2MTc4NCwiZXhwIjoxNTk5MjY1Mzg0LCJpYXQiOjE1OTkyNjE3ODQsImlzcyI6ImFwaS1kZXYtYm9vc3QtRHJvbmVEZWxpdmVyeSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3QifQ.sttYhdDYSHAvPNpSWVAIiKAcFD0NymHSzWpiH2DAgMM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"peso\": 2000,\r\n  \"login\": \"menezes\",\r\n  \"distanciaEmMetros\": 2000,\r\n  \"dataHora\": \"2020-09-04T22:42:31.809Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44332/v1/pedido/cadastrar",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44332",
+					"path": [
+						"v1",
+						"pedido",
+						"cadastrar"
+					]
+				},
+				"description": "Cadastrar/Criar Pedido"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44332/v1/pedido/list",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1lbmV6ZXMiLCJyb2xlIjoiQWRtaW5pc3RyYWRvciIsIm5iZiI6MTU5OTI2MTc4NCwiZXhwIjoxNTk5MjY1Mzg0LCJpYXQiOjE1OTkyNjE3ODQsImlzcyI6ImFwaS1kZXYtYm9vc3QtRHJvbmVEZWxpdmVyeSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3QifQ.sttYhdDYSHAvPNpSWVAIiKAcFD0NymHSzWpiH2DAgMM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"peso\": 9000,  \r\n  \"dataHora\": \"2020-08-01T01:10:10.423Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44332/v1/pedido/list",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44332",
+					"path": [
+						"v1",
+						"pedido",
+						"list"
+					]
+				},
+				"description": "Listar os pedidos na base"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44332/v1/drone/situacao",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44332/v1/drone/situacao",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44332",
+					"path": [
+						"v1",
+						"drone",
+						"situacao"
+					]
+				},
+				"description": "Listar os drones na base"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44332/v1/entrega/inicia",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1lbmV6ZXMiLCJyb2xlIjoiQWRtaW5pc3RyYWRvciIsIm5iZiI6MTU5OTI2MTc4NCwiZXhwIjoxNTk5MjY1Mzg0LCJpYXQiOjE1OTkyNjE3ODQsImlzcyI6ImFwaS1kZXYtYm9vc3QtRHJvbmVEZWxpdmVyeSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3QifQ.sttYhdDYSHAvPNpSWVAIiKAcFD0NymHSzWpiH2DAgMM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44332/v1/entrega/inicia",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44332",
+					"path": [
+						"v1",
+						"entrega",
+						"inicia"
+					]
+				},
+				"description": "Dispara o inicio das entregas, afetando o(s) status do(s) drone(s)"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44331/v1/Pagamento/cartao",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"bandeira\": 0,\r\n  \"nome\": \"Jonathan Menezes\",\r\n  \"numeroCartao\": \"1234569845634789\",\r\n  \"dataValidade\": \"2025-09-07T22:49:49.427Z\",\r\n  \"codSeguranca\": \"128\",\r\n  \"tipo\": 0,\r\n  \"idPedido\": \"0E3C47BB-3FD2-4076-9D42-1C725F1B3C1E\",\r\n  \"valor\": 1.800\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44331/v1/Pagamento/cartao",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44331",
+					"path": [
+						"v1",
+						"Pagamento",
+						"cartao"
+					]
+				},
+				"description": "Processar o pagamento do Pedido"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8082/topics/delivery-pedido",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.kafka.json.v2+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"records\": [\r\n   {\"key\":\"\",\"value\":{\"peso\":1500}}   \r\n  ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8082/topics/delivery-pedido",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"topics",
+						"delivery-pedido"
+					]
+				},
+				"description": "Faz o papel de Producer para inserir esse pedido como Tópico dentro do Kafka"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
