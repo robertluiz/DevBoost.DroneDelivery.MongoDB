@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3b1c0f3c-b321-4f7c-ad1a-be9f67ada8a9",
+		"_postman_id": "3f3ac9fa-5257-4cdf-965a-0f76f1112b7a",
 		"name": "Testes API DroneDelivery",
 		"description": "Fazer o consumo da API DroneDelivery",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -119,7 +119,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"peso\": 2000,\r\n  \"login\": \"menezes\",\r\n  \"distanciaEmMetros\": 2000,\r\n  \"dataHora\": \"2020-09-04T22:42:31.809Z\"\r\n}",
+					"raw": "{\r\n    \"peso\": 2000,\r\n    \"login\": \"menezes\",\r\n    \"distanciaEmMetros\": 2000,\r\n    \"dataHora\": \"2020-09-04T22:42:31.809Z\",\r\n    \"valor\": 25,\r\n    \"bandeiracartao\": \"Visa\",\r\n    \"nomecartao\": \"Robert Luiz\",\r\n    \"numerocartao\": \"6277801223574589\",\r\n    \"datavalidadecartao\": \"2022-03-19\",\r\n    \"CodSegurancaCartao\": \"752\",\r\n    \"TipoCartao\": \"Credito\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -276,7 +276,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8082/topics/delivery-pedido",
+			"name": "Pedido-Kafka",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -288,7 +288,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"records\": [\r\n   {\"key\":\"\",\"value\":{\"peso\":1500}}   \r\n  ]\r\n}\r\n"
+					"raw": "{\r\n    \"records\": [\r\n        {\r\n            \"key\": \"\",\r\n            \"value\": {\r\n                \"peso\": 1000,\r\n                \"valor\": 25,\r\n                \"bandeiracartao\": \"Visa\",\r\n                \"nomecartao\": \"Robert Luiz\",\r\n                \"numerocartao\": \"6277801223574589\",\r\n                \"datavalidadecartao\": \"2022-03-19\",\r\n                \"CodSegurancaCartao\": \"752\",\r\n                \"TipoCartao\": \"Credito\"\r\n            }\r\n        }\r\n    ]\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8082/topics/delivery-pedido",
