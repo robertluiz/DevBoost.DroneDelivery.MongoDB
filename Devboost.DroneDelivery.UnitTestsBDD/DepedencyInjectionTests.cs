@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Data;
+using Devboost.DroneDelivery.Mongo;
 
 namespace Devboost.DroneDelivery.UnitTestsBDD
 {

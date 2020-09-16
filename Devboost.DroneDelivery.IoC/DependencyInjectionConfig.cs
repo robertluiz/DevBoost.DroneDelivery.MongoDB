@@ -13,6 +13,8 @@ using System.Diagnostics.CodeAnalysis;
 using Devboost.DroneDelivery.Domain.Interfaces.External;
 using Devboost.DroneDelivery.Domain.VOs;
 using Devboost.DroneDelivery.External;
+using Devboost.DroneDelivery.Mongo;
+using MongoDB.Driver;
 
 namespace Devboost.DroneDelivery.IoC
 {
@@ -49,6 +51,20 @@ namespace Devboost.DroneDelivery.IoC
                     SqlServerDialect.Provider);
                 return connection.OpenDbConnection();
            });
+
+            services.AddTransient( (mongo) =>
+           {
+               var database = config.GetValue<string>("MONGO_DATABASE");
+               var host = config.GetValue<string>("MONGO_HOST");
+               var port = config.GetValue<string>("MONGO_PORT");
+               var connectionString = $"mongodb://{host}:{port}";
+
+               var mongoClient = new MongoClient(connectionString);
+
+               return mongoClient.GetDatabase(database);
+           });
+
+
 
             return services;
         }

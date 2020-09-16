@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.3.0" />
+    <PackageReference Include="ServiceStack.Text" Version="5.9.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Devboost.DroneDelivery.Domain\Devboost.DroneDelivery.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

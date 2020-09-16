@@ -39,6 +39,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Devboost.DroneDelivery.DomainService\Devboost.DroneDelivery.DomainService.csproj" />
 		<ProjectReference Include="..\Devboost.DroneDelivery.Domain\Devboost.DroneDelivery.Domain.csproj" />
+		<ProjectReference Include="..\Devboost.DroneDelivery.Mongo\Devboost.DroneDelivery.Mongo.csproj" />
 		<ProjectReference Include="..\Devboost.DroneDelivery.Repository\Devboost.DroneDelivery.Repository.csproj" />
 	</ItemGroup>
 
