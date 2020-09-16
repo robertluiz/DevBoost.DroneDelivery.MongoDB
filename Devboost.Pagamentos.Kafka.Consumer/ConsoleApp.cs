@@ -1,16 +1,15 @@
-using Confluent.Kafka;
-using devboost.DroneDelivery.Kafka.Consumer.External;
-using devboost.DroneDelivery.Kafka.Consumer.Model;
-using devboost.DroneDelivery.Kafka.Consumer.Validators;
-using Microsoft.Extensions.Configuration;
-using Serilog.Core;
-using System;
+Ôªøusing System;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
+using Confluent.Kafka;
 using devboost.DroneDelivery.Kafka.Consumer.Utils;
+using Devboost.Pagamentos.Kafka.Consumer.External;
+using Devboost.Pagamentos.Kafka.Consumer.Model;
+using Devboost.Pagamentos.Kafka.Consumer.Validators;
+using Microsoft.Extensions.Configuration;
+using Serilog.Core;
 
-namespace devboost.DroneDelivery.Kafka.Consumer
+namespace Devboost.Pagamentos.Kafka.Consumer
 {
     public class ConsoleApp
     {
@@ -27,14 +26,10 @@ namespace devboost.DroneDelivery.Kafka.Consumer
 
         public void Run()
         {
-            _logger.Information("Recuperando login e senha");
-            string usuario = _configuration["user_login"];
-            string senha = _configuration["user_pass"];
 
             _logger.Information("Testando o consumo de mensagens com Kafka");
             var nomeTopic = _configuration["Kafka_Topic"];
             _logger.Information($"Topic = {nomeTopic}");
-
             try
             {
                 var bootstrapServers = _configuration["Kafka_Broker"];
@@ -42,10 +37,10 @@ namespace devboost.DroneDelivery.Kafka.Consumer
             }
             catch (Exception e)
             {
-                _logger.Warning("Topic j· existe");
+                _logger.Warning("Topic j√° existe");
 
             }
-
+            
 
             try
             {
@@ -56,49 +51,38 @@ namespace devboost.DroneDelivery.Kafka.Consumer
                 {
                     while (true)
                     {
-                        try
-                        {
+                        var cr = consumer.Consume();
+                        var dados = cr.Message.Value;
 
-                            var cr = consumer.Consume();
-                            var dados = cr.Message.Value;
+                        _logger.Information(
+                            $"Mensagem lida: {dados}");
 
-                            _logger.Information(
-                                $"Mensagem lida: {dados}");
-
-                            var pedido = JsonSerializer.Deserialize<Pedido>(dados,
-                                new JsonSerializerOptions()
-                                {
-                                    PropertyNameCaseInsensitive = true
-                                });
-
-                            var validationResult = new PedidoValidator().Validate(pedido);
-                            if (validationResult.IsValid)
+                        var pagamento = JsonSerializer.Deserialize<PagamentoStatus>(dados,
+                            new JsonSerializerOptions()
                             {
-                                var token = _deliveryExternalControl.Logar(new Auth() { Login = usuario, Senha = senha });
-                                _deliveryExternalControl.EnviarPedido(pedido, token);
-                                _logger.Information("AÁ„o registrada com sucesso!");
-                            }
-                            else
-                                _logger.Warning("Dados inv·lidos para a AÁ„o");
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e);
-                            _logger.Warning("Erro na fila");
-                        }
+                                PropertyNameCaseInsensitive = true
+                            });
 
-                       
+                        var validationResult = new PagamentoStatusValidator().Validate(pagamento);
+                        if (validationResult.IsValid)
+                        {
+                                
+                            _deliveryExternalControl.AtualizaStatusPagamento(pagamento);
+                            _logger.Information("A√ß√£o registrada com sucesso!");
+                        }
+                        else
+                            _logger.Warning("Dados inv√°lidos para a A√ß√£o");
                     }
                 }
                 catch (OperationCanceledException)
                 {
                     consumer.Close();
-                    _logger.Warning("Cancelada a execuÁ„o do Consumer...");
+                    _logger.Warning("Cancelada a execu√ß√£o do Consumer...");
                 }
             }
             catch (Exception ex)
             {
-                _logger.Warning($"ExceÁ„o: {ex.GetType().FullName} | " +
+                _logger.Warning($"Exce√ß√£o: {ex.GetType().FullName} | " +
                                 $"Mensagem: {ex.Message}");
             }
         }
@@ -106,13 +90,12 @@ namespace devboost.DroneDelivery.Kafka.Consumer
         private IConsumer<Ignore, string> GetConsumerBuilder()
         {
             var bootstrapServers = _configuration["Kafka_Broker"];
-
             _logger.Information($"BootstrapServers = {bootstrapServers}");
-
+            
             var config = new ConsumerConfig
             {
                 BootstrapServers = bootstrapServers,
-                GroupId = $"dronedelivery-consumer",
+                GroupId = $"pagamento-consumer",
                 AutoOffsetReset = AutoOffsetReset.Earliest
             };
             _logger.Information($"GroupId = {config.GroupId}");

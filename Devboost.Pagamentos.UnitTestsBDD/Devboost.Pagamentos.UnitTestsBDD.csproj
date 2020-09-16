@@ -28,6 +28,7 @@
 	<ItemGroup>
 		<PackageReference Include="AutoBogus" Version="2.10.0" />
 		<PackageReference Include="AutoMoqCore" Version="1.0.0" />
+		<PackageReference Include="Confluent.Kafka" Version="1.5.1" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.8" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.8" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.8" />
@@ -53,7 +54,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Devboost.DroneDelivery.Domain\Devboost.DroneDelivery.Domain.csproj" />
 	  <ProjectReference Include="..\Devboost.Pagamentos.DomainService\Devboost.Pagamentos.DomainService.csproj" />
 	  <ProjectReference Include="..\Devboost.Pagamentos.Domain\Devboost.Pagamentos.Domain.csproj" />
 	  <ProjectReference Include="..\Devboost.Pagamentos.External\Devboost.Pagamentos.External.csproj" />

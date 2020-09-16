@@ -15,13 +15,20 @@ namespace Devboost.DroneDelivery.Repository.Models
 
         public Guid Id { get; set; }
         public int Peso { get; set; }
-        //public double Latitude { get; set; }
-        //public double Longitude { get; set; }
+
         public string Status { get; set; }
         public DateTime? DataHora { get; set; }
         public double DistanciaDaEntrega { get; set; }
         public Guid DroneId { get; set; }
         public Guid CompradorId { get; set; }
+
+        public PagamentoBandeiraEnum BandeiraCartao { get; set; }
+        public string NomeCartao { get; set; }
+        public string NumeroCartao { get; set; }
+        public DateTime DataValidadeCartao { get; set; }
+        public string CodSegurancaCartao { get; set; }
+        public TipoCartaoEnum TipoCartao { get; set; }
+
         public StatusPagamentoEnum StatusPagamento { get; set; }
     }
 }

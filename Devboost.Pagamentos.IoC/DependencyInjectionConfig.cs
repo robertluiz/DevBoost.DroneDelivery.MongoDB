@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceStack.OrmLite;
 using System.Diagnostics.CodeAnalysis;
+using Confluent.Kafka;
 using Devboost.Pagamentos.Domain.Interfaces.External.Context;
 using Devboost.Pagamentos.Domain.VO;
 using Devboost.Pagamentos.External.Context;
@@ -19,11 +20,16 @@ namespace Devboost.Pagamentos.IoC
     {
         public static IServiceCollection ResolveDependencies(this IServiceCollection services, IConfiguration config)
         {
+            var kConfig = new ProducerConfig
+            {
+                BootstrapServers = config.GetValue<string>("ServerKafka")
+            };
 
             services.AddSingleton(p => new ExternalConfigVO
             {
                 GatewayUrl = config.GetValue<string>("GATEWAY__URL"),
-                DeliveryUrl = config.GetValue<string>("DELIVERY_URL")
+                DeliveryUrl = config.GetValue<string>("DELIVERY_URL"),
+                TopicPagamento = config.GetValue<string>("PAGAMENTO_TOPIC")
             });
 
             services.AddScoped<IPagamentoCommand, PagamentoCommand>();
@@ -42,6 +48,9 @@ namespace Devboost.Pagamentos.IoC
                     SqlServerDialect.Provider);
                 return connection.OpenDbConnection();
             });
+
+
+            services.AddScoped((kf) => new ProducerBuilder<Null, string>(kConfig).Build());
 
             return services;
         }

@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceStack.OrmLite;
 using System.Diagnostics.CodeAnalysis;
+using Devboost.DroneDelivery.Domain.Interfaces.External;
+using Devboost.DroneDelivery.Domain.VOs;
+using Devboost.DroneDelivery.External;
 
 namespace Devboost.DroneDelivery.IoC
 {
@@ -30,6 +33,15 @@ namespace Devboost.DroneDelivery.IoC
             services.AddScoped<IPedidoQuery, PedidoQuery>();
             services.AddScoped<IUsuarioCommand, UsuarioCommand>();
             services.AddScoped<IUsuarioQuery, UsuarioQuery>();            
+            services.AddScoped<IPagamentoExternalContext, PagamentoExternalContext>();
+
+            services.AddSingleton(p => new ExternalConfigVO
+            {
+                UrlPagamento = config.GetValue<string>("PAGAMENTO_URL")
+               
+            });
+
+
             services.AddTransient( (db) =>
            {
                 var cn = config.GetConnectionString("DroneDelivery");

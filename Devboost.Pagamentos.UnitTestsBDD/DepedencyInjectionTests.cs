@@ -14,7 +14,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System;
 using System.Data;
+using System.Threading;
 using System.Threading.Tasks;
+using AutoBogus;
+using Confluent.Kafka;
 
 namespace Devboost.Pagamentos.UnitTestsBDD
 {
@@ -27,7 +30,8 @@ namespace Devboost.Pagamentos.UnitTestsBDD
             var externalConfig = new ExternalConfigVO
             {
                 GatewayUrl = config.GetValue<string>("GATEWAY__URL"),
-                DeliveryUrl = config.GetValue<string>("DELIVERY_URL")
+                DeliveryUrl = config.GetValue<string>("DELIVERY_URL"),
+                TopicPagamento = config.GetValue<string>("PAGAMENTO_TOPIC")
             };
 
             services.AddSingleton(p => externalConfig);
@@ -46,12 +50,23 @@ namespace Devboost.Pagamentos.UnitTestsBDD
             services.AddScoped<IDeliveryExternalContext>((idel) =>
             {
                 var mockDeliveryExternalContext = new Mock<DeliveryExternalContext>(externalConfig);
-                mockDeliveryExternalContext.Setup(s => s.AtualizaStatusPagamento(It.IsAny<DeliveryExternalParam>())).Returns(Task.Factory.StartNew(() => string.Empty));
+                mockDeliveryExternalContext.Setup(s => s.AtualizaStatusPagamento(It.IsAny<DeliveryExternalParam>()))
+                    .Returns(Task.Factory.StartNew(() => string.Empty));
 
                 return mockDeliveryExternalContext.Object;
             });
 
-            services.AddTransient((db) =>
+
+            services.AddScoped((kf) =>
+            {
+                var result = new AutoFaker<DeliveryResult<Null, string>>().Generate();
+                var kafkaMock = new Mock<IProducer<Null, string>>();
+                kafkaMock.Setup(r => r.ProduceAsync(It.IsAny<string>(), It.IsAny<Message<Null, string>>(),
+                    It.IsAny<CancellationToken>())).ReturnsAsync(result);
+                return kafkaMock.Object;
+            });
+
+        services.AddTransient((db) =>
             {
                 return dbConnection;
             });

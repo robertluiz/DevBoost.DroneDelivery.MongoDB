@@ -1,13 +1,13 @@
-﻿using Devboost.Pagamentos.Domain.Enums;
-using Newtonsoft.Json.Converters;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+﻿using System;
+using Devboost.DroneDelivery.Domain.Enums;
 
-namespace Devboost.Pagamentos.Domain.Params
+namespace Devboost.DroneDelivery.Domain.DTOs
 {
-    public class CartaoParam : PagamentoParam
+    public class PagamentoDTO
     {
+        public Guid IdPedido { get; set; }
+
+        public float Valor { get; set; }
         public PagamentoBandeiraEnum Bandeira { get; set; }
         public string Nome { get; set; }
         public string NumeroCartao { get; set; }

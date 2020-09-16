@@ -4,9 +4,10 @@ using System.Threading.Tasks;
 using Devboost.DroneDelivery.Domain.Entities;
 using Devboost.DroneDelivery.Domain.Enums;
 using Devboost.DroneDelivery.Domain.Interfaces.Commands;
+using Devboost.DroneDelivery.Domain.Interfaces.External;
 using Devboost.DroneDelivery.Domain.Interfaces.Repository;
-using Devboost.DroneDelivery.Domain.Interfaces.Services;
 using Devboost.DroneDelivery.Domain.Params;
+using ServiceStack;
 
 namespace Devboost.DroneDelivery.DomainService.Commands
 {
@@ -15,25 +16,25 @@ namespace Devboost.DroneDelivery.DomainService.Commands
         private readonly IDroneCommand _droneCommand;
         private readonly IPedidosRepository _pedidosRepository;
         private readonly IUsuariosRepository _usuariosRepository;
+        private readonly IPagamentoExternalContext _pagamentoExternalContext;
 
-        public PedidoCommand(IDroneCommand droneCommand, IPedidosRepository pedidosRepository, IUsuariosRepository usuariosRepository)
+        public PedidoCommand(IDroneCommand droneCommand, IPedidosRepository pedidosRepository, IUsuariosRepository usuariosRepository, IPagamentoExternalContext pagamentoExternalContext)
         {
             _droneCommand = droneCommand;
             _pedidosRepository = pedidosRepository;
             _usuariosRepository = usuariosRepository;
+            _pagamentoExternalContext = pagamentoExternalContext;
         }
 
         public async Task<bool> InserirPedido(PedidoParam pedido)
         {
             var userDono = await _usuariosRepository.GetSingleByLogin(pedido.Login);
 
-            var novoPedido = new PedidoEntity
-            {
-                Id = Guid.NewGuid(),
-                Peso = pedido.Peso,                
-                DataHora = pedido.DataHora,
-                CompradorId = userDono.Id
-            };
+            var novoPedido = pedido.ConvertTo<PedidoEntity>();
+
+            novoPedido.Id = Guid.NewGuid();
+            novoPedido.CompradorId = userDono.Id;
+            
 
             //calculoDistancia
             novoPedido.DistanciaDaEntrega = GeolocalizacaoService.CalcularDistanciaEmMetro(userDono.Latitude, userDono.Longitude);
@@ -45,8 +46,14 @@ namespace Devboost.DroneDelivery.DomainService.Commands
 
             novoPedido.Drone = drone;
             novoPedido.DroneId = drone != null ? drone.Id : novoPedido.DroneId;
+            
             novoPedido.Status = PedidoStatus.PendenteEntrega.ToString();
             await _pedidosRepository.Inserir(novoPedido);
+            
+            var pagamentoCartao = novoPedido.ConvertTo<PagamentoCartaoParam>();
+            pagamentoCartao.IdPedido = novoPedido.Id;
+            
+            await _pagamentoExternalContext.EfetuarPagamentoCartao(pagamentoCartao);
             await _droneCommand.AtualizaDrone(drone);
 
             return true;
