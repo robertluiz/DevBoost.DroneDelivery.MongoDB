@@ -35,7 +35,7 @@ namespace Devboost.DroneDelivery.IoC
             services.AddScoped<IPedidoQuery, PedidoQuery>();
             services.AddScoped<IUsuarioCommand, UsuarioCommand>();
             services.AddScoped<IUsuarioQuery, UsuarioQuery>();            
-            services.AddScoped<IPagamentoExternalContext, PagamentoExternalContext>();
+            services.AddScoped<IPagamentoExternalContext, PagamentoExternalContext>();            
 
             services.AddSingleton(p => new ExternalConfigVO
             {

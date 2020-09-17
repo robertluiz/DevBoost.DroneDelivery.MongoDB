@@ -11,6 +11,10 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Data;
 using Devboost.DroneDelivery.Mongo;
+using MongoDB.Driver;
+using Devboost.DroneDelivery.Domain.Interfaces.External;
+using Devboost.DroneDelivery.External;
+using Devboost.DroneDelivery.Domain.VOs;
 
 namespace Devboost.DroneDelivery.UnitTestsBDD
 {
@@ -32,9 +36,29 @@ namespace Devboost.DroneDelivery.UnitTestsBDD
             services.AddScoped<IPedidoQuery, PedidoQuery>();
             services.AddScoped<IUsuarioCommand, UsuarioCommand>();
             services.AddScoped<IUsuarioQuery, UsuarioQuery>();
+            services.AddScoped<IPagamentoExternalContext, PagamentoExternalContext>();
+
+            services.AddSingleton(p => new ExternalConfigVO
+            {
+                UrlPagamento = config.GetValue<string>("PAGAMENTO_URL")
+
+            });
+
             services.AddTransient((db) =>
             {
                 return dbConnection;
+            });
+
+            services.AddTransient((mongo) =>
+            {
+                var database = config.GetValue<string>("MONGO_DATABASE");
+                var host = config.GetValue<string>("MONGO_HOST");
+                var port = config.GetValue<string>("MONGO_PORT");
+                var connectionString = $"mongodb://{host}:{port}";
+
+                var mongoClient = new MongoClient(connectionString);
+
+                return mongoClient.GetDatabase(database);
             });
 
             return services.BuildServiceProvider();

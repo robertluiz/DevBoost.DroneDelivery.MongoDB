@@ -2,10 +2,13 @@
 using Devboost.DroneDelivery.Domain.Entities;
 using Devboost.DroneDelivery.Domain.Enums;
 using Devboost.DroneDelivery.Domain.Interfaces.Commands;
+using Devboost.DroneDelivery.Domain.Interfaces.External;
 using Devboost.DroneDelivery.Domain.Interfaces.Repository;
 using Devboost.DroneDelivery.Domain.Params;
+using Devboost.DroneDelivery.DomainService.Commands;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using ServiceStack.OrmLite;
 using System;
 using System.Data;
@@ -48,6 +51,11 @@ namespace Devboost.DroneDelivery.UnitTestsBDD.Historias.NaCriacaoDoPedidoSelecio
         [When(@"o pedido for inserido o drone selecionado deverá ao final corresponder aos critérios definidos")]
         public async Task QuandoOPedidoForInseridoODroneSelecionadoDeveraAoFinalCorresponderAosCriteriosDefinidos()
         {
+            var _droneCommandMock = new Mock<IDroneCommand>();
+            var _pedidosRepositoryMock = new Mock<IPedidosRepository>();
+            var _usuariosRepositoryMock = new Mock<IUsuariosRepository>();
+            var _pagamentoExternalContextMock = new Mock<IPagamentoExternalContext>();
+
             var pesoGramas = _scenarioContext.Get<int>("FirstNumber");
             var distanciaMetros = _scenarioContext.Get<float>("SecondNumber");
 
@@ -60,14 +68,16 @@ namespace Devboost.DroneDelivery.UnitTestsBDD.Historias.NaCriacaoDoPedidoSelecio
 
             var login = newUser.Login;
 
-            await _usuariosRepository.Inserir(newUser);
+            await _usuariosRepositoryMock.Object.Inserir(newUser);
 
             var pedido = new AutoFaker<PedidoParam>()
                 .RuleFor(fake => fake.Peso, fake => pesoGramas)                
                 .RuleFor(fake => fake.Login, fake => login)
                 .Generate();
 
-            var result = await _pedidoCommand.InserirPedido(pedido);
+            var _pedidoCommandMock = new Mock<PedidoCommand>(_droneCommandMock.Object, _pedidosRepositoryMock.Object, _usuariosRepositoryMock.Object, _pagamentoExternalContextMock.Object);
+
+            var result = await _pedidoCommandMock.Object.InserirPedido(pedido);
             _scenarioContext.Add("FinalResult", result);
         }
 

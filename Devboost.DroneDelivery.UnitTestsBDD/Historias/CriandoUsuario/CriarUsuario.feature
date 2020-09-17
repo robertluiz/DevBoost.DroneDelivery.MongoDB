@@ -4,7 +4,7 @@
 	Login e Senha
 
 Cenario: Será passado dados do usuário tais como
-	Dado o usuário fulanoAlmeida
-	E senha 123456ABC
+	Dado o usuário ciclano
+	E senha 123456#
 	Quando inserido o usuário
 	Entao se for cadastrado com sucesso o resultado será True 
