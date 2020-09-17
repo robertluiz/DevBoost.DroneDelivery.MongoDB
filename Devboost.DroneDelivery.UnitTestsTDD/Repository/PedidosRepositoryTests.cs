@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoBogus;
 using AutoMoqCore;
@@ -10,6 +11,7 @@ using Devboost.DroneDelivery.Mongo;
 using Devboost.DroneDelivery.Repository.Implementation;
 using Devboost.DroneDelivery.Repository.Models;
 using KellermanSoftware.CompareNetObjects;
+using MongoDB.Driver;
 using Moq;
 using ServiceStack;
 using ServiceStack.OrmLite;
@@ -33,25 +35,45 @@ namespace Devboost.DroneDelivery.UnitTestsTDD.Repository
         public async Task Atualizar_test()
         {
             //Given(Preparação)
-            using var dbconnection = await new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider).OpenAsync();
-            var baseRepositoryMock = new PedidosRepository(dbconnection);
+            var mocker = new AutoMoqer();
+            var collectionMock = new Mock<IMongoCollection<Pedido>>();
+            var service = new Mock<IMongoDatabase>();
+
             
-            dbconnection.CreateTableIfNotExists<Pedido>();
+
+            var faker = AutoFaker.Create();
+
+
             var expectresult = _faker.Generate<Pedido>();
-            
-            await dbconnection.InsertAsync(expectresult);
             expectresult.Peso = 1;
-            
+
             var param = expectresult.ConvertTo<PedidoEntity>();
-            
+
+
+
+            collectionMock.Setup(c=> 
+                c.FindOneAndReplaceAsync(
+                     It.IsAny<FilterDefinition<Pedido>>(), 
+                It.IsAny<Pedido>(), 
+                    It.IsAny<FindOneAndReplaceOptions<Pedido>>(),
+            It.IsAny<CancellationToken>()))
+                .Returns(Task.Factory.StartNew(()=>expectresult))
+                .Verifiable();
+            service.Setup(r => r.GetCollection<Pedido>("Pedido", null)).Returns(collectionMock.Object).Verifiable();
+            var baseRepositoryMock = new PedidosRepository(service.Object);
+
             //When
-            
             await baseRepositoryMock.Atualizar(param);
-            var result = await dbconnection.SingleAsync<Pedido>(p=> p.Id == expectresult.Id);
-            
+
             //Then
+            var comparison = new CompareLogic();
+            service.Verify(mock => mock.GetCollection<Pedido>("Pedido", null), Times.Once());
+            collectionMock.Verify(mock => mock.FindOneAndReplaceAsync(
+                It.IsAny<FilterDefinition<Pedido>>(),
+                It.IsAny<Pedido>(),
+                It.IsAny<FindOneAndReplaceOptions<Pedido>>(),
+                It.IsAny<CancellationToken>()), Times.Once());
             
-            Assert.True(_comparison.Compare(result, expectresult).AreEqual);
             
        
         }
@@ -60,48 +82,42 @@ namespace Devboost.DroneDelivery.UnitTestsTDD.Repository
         [Trait("PedidosRepositoryTests", "Repository Tests")]
         public async Task Inserir_test()
         {
+
             //Given(Preparação)
-            using var dbconnection = await new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider).OpenAsync();
-            var baseRepositoryMock = new PedidosRepository(dbconnection);
-            
-            dbconnection.CreateTableIfNotExists<Pedido>();
+
+            var collectionMock = new Mock<IMongoCollection<Pedido>>();
+            var service = new Mock<IMongoDatabase>();
+
+
             var expectresult = _faker.Generate<Pedido>();
-            
             var param = expectresult.ConvertTo<PedidoEntity>();
-            
+
+
+
+            collectionMock.Setup(c =>
+                    c.InsertOneAsync(It.IsAny<Pedido>(), null,
+                        It.IsAny<CancellationToken>()))
+                .Returns(Task.Factory.StartNew(() => string.Empty))
+                .Verifiable();
+            service.Setup(r => r.GetCollection<Pedido>("Pedido", null)).Returns(collectionMock.Object).Verifiable();
+            var baseRepositoryMock = new PedidosRepository(service.Object);
+
             //When
-            
             await baseRepositoryMock.Inserir(param);
-            var result = await dbconnection.SingleAsync<Pedido>(p=> p.Id == expectresult.Id);
-            
+
             //Then
-            
-            Assert.True(_comparison.Compare(result, expectresult).AreEqual);
-            
-       
+         
+            service.Verify(mock => mock.GetCollection<Pedido>("Pedido", null), Times.Once());
+            collectionMock.Verify(mock => mock.InsertOneAsync(It.IsAny<Pedido>(), null,
+                It.IsAny<CancellationToken>()),Times.Once());
+
         } 
         
         [Fact(DisplayName = "GetAll")]
         [Trait("PedidosRepositoryTests", "Repository Tests")]
         public async Task GetAll_test()
         {
-            //Given(Preparação)
-            using var dbconnection = await new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider).OpenAsync();
-            var baseRepositoryMock = new PedidosRepository(dbconnection);
-            
-            dbconnection.CreateTableIfNotExists<Pedido>();
-            var expectresult = _faker.Generate<Pedido>(4);
-            
-            await dbconnection.InsertAllAsync(expectresult);
-            
-            //When
-            
-            var result = await baseRepositoryMock.GetAll();
-            
-            
-            //Then
-            
-            Assert.True(_comparison.Compare(result.ConvertTo<List<Pedido>>(), expectresult).AreEqual);
+          
             
        
         }
@@ -111,24 +127,7 @@ namespace Devboost.DroneDelivery.UnitTestsTDD.Repository
         public async Task GetByDroneID_test()
         {
             //Given(Preparação)
-            using var dbconnection = await new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider).OpenAsync();
-            var baseRepositoryMock = new PedidosRepository(dbconnection);
-            
-            dbconnection.CreateTableIfNotExists<Pedido>();
-            var param = Guid.NewGuid();
-            var expectresult = new AutoFaker<Pedido>()
-                .RuleFor(fake => fake.DroneId, fake =>param)
-                .Generate(3);
-            await dbconnection.InsertAllAsync(expectresult);
-            
-            //When
-            
-            var result = await baseRepositoryMock.GetByDroneID(param);
-            
-            
-            //Then
-            
-            Assert.True(_comparison.Compare(result.ConvertTo<List<Pedido>>(), expectresult).AreEqual);
+         
             
        
         }
@@ -137,27 +136,7 @@ namespace Devboost.DroneDelivery.UnitTestsTDD.Repository
         [Trait("PedidosRepositoryTests", "Repository Tests")]
         public async Task GetSingleByDroneID_test()
         {
-            //Given(Preparação)
-            using var dbconnection = await new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider).OpenAsync();
-            var baseRepositoryMock = new PedidosRepository(dbconnection);
-            
-            dbconnection.CreateTableIfNotExists<Pedido>();
-            var param = Guid.NewGuid();
-            var expectresult = new AutoFaker<Pedido>()
-                .RuleFor(fake => fake.DroneId, fake =>param)
-                .RuleFor(fake => fake.Status, fake => PedidoStatus.EmTransito.ToString())
-                .Generate();
-            await dbconnection.InsertAsync(expectresult);
-            
-            //When
-            
-            var result = await baseRepositoryMock.GetSingleByDroneID(param);
-            
-            
-            //Then
-            
-            Assert.True(_comparison.Compare(result.ConvertTo<Pedido>(), expectresult).AreEqual);
-            
+       
        
         }
         
@@ -166,29 +145,7 @@ namespace Devboost.DroneDelivery.UnitTestsTDD.Repository
         public async Task GetByDroneIDAndStatus_test()
         {
             //Given(Preparação)
-            using var dbconnection = await new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider).OpenAsync();
-            var baseRepositoryMock = new PedidosRepository(dbconnection);
-            
-            dbconnection.CreateTableIfNotExists<Pedido>();
-            
-            var param1 = Guid.NewGuid();
-            var param2 = PedidoStatus.Entregue;
-            
-            var expectresult = new AutoFaker<Pedido>()
-                .RuleFor(fake => fake.DroneId, fake =>param1)
-                .RuleFor(fake => fake.Status, fake => PedidoStatus.Entregue.ToString())
-                .Generate(3);
-            
-            await dbconnection.InsertAllAsync(expectresult);
-            
-            //When
-            
-            var result = await baseRepositoryMock.GetByDroneIDAndStatus(param1,param2);
-            
-            
-            //Then
-            
-            Assert.True(_comparison.Compare(result.ConvertTo<List<Pedido>>(), expectresult).AreEqual);
+  
             
        
         }
