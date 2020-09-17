@@ -21,9 +21,7 @@ namespace Devboost.DroneDelivery.UnitTestsBDD.Historias.NaCriacaoDoPedidoSelecio
     [Binding]
     public class NaCriacaoDoPedidoSelecionarODroneSteps
     {
-        private readonly ScenarioContext _scenarioContext;
-        private readonly IPedidoCommand _pedidoCommand;
-        private readonly IUsuariosRepository _usuariosRepository;
+        private readonly ScenarioContext _scenarioContext;        
         private readonly IDbConnection _dbConnection;        
         private readonly IServiceProvider _serviceProvider;
 
@@ -31,9 +29,7 @@ namespace Devboost.DroneDelivery.UnitTestsBDD.Historias.NaCriacaoDoPedidoSelecio
         {
             _dbConnection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider).Open();
             _scenarioContext = scenarioContext;
-            _serviceProvider = _serviceProvider = DepedencyInjectionTests.BuildServicesProvider(new ConfigurationBuilder().Build(), _dbConnection);
-            _pedidoCommand = _serviceProvider.GetRequiredService<IPedidoCommand>();
-            _usuariosRepository = _serviceProvider.GetRequiredService<IUsuariosRepository>();
+            _serviceProvider = DepedencyInjectionTests.BuildServicesProvider(new ConfigurationBuilder().AddJsonFile($"appsettingsTests.json", true, true).AddEnvironmentVariables().Build(), _dbConnection);            
         }
 
         [Given(@"um pedido com peso total de (.*) gramas")]
