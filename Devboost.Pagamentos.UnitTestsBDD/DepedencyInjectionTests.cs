@@ -27,6 +27,11 @@ namespace Devboost.Pagamentos.UnitTestsBDD
         {
             var services = new ServiceCollection();
 
+            var kConfig = new ProducerConfig
+            {
+                BootstrapServers = config.GetValue<string>("ServerKafka")
+            };
+
             var externalConfig = new ExternalConfigVO
             {
                 GatewayUrl = config.GetValue<string>("GATEWAY__URL"),
@@ -44,17 +49,18 @@ namespace Devboost.Pagamentos.UnitTestsBDD
             services.AddScoped<IDeliveryExternalService, DeliveryExternalService>();
 
             services.AddScoped<IGatewayExternalContext, GatewayExternalContext>();
+            services.AddScoped<IDeliveryExternalContext, DeliveryExternalContext>();
 
             services.ResolveConverters();
 
-            services.AddScoped<IDeliveryExternalContext>((idel) =>
-            {
-                var mockDeliveryExternalContext = new Mock<DeliveryExternalContext>(externalConfig);
-                mockDeliveryExternalContext.Setup(s => s.AtualizaStatusPagamento(It.IsAny<DeliveryExternalParam>()))
-                    .Returns(Task.Factory.StartNew(() => string.Empty));
+            //services.AddScoped<IDeliveryExternalContext>((idel) =>
+            //{
+            //    var mockDeliveryExternalContext = new Mock<DeliveryExternalContext>(externalConfig, kConfig);
+            //    mockDeliveryExternalContext.Setup(s => s.AtualizaStatusPagamento(It.IsAny<DeliveryExternalParam>()))
+            //        .Verifiable();
 
-                return mockDeliveryExternalContext.Object;
-            });
+            //    return mockDeliveryExternalContext.Object;
+            //});
 
 
             services.AddScoped((kf) =>

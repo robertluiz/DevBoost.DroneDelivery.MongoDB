@@ -46,7 +46,7 @@ namespace Devboost.DroneDelivery.UnitTestsBDD.Historias.NaCriacaoDoPedidoSelecio
 
         [When(@"o pedido for inserido o drone selecionado deverá ao final corresponder aos critérios definidos")]
         public async Task QuandoOPedidoForInseridoODroneSelecionadoDeveraAoFinalCorresponderAosCriteriosDefinidos()
-        {
+        {            
             var _droneCommandMock = new Mock<IDroneCommand>();
             var _pedidosRepositoryMock = new Mock<IPedidosRepository>();
             var _usuariosRepositoryMock = new Mock<IUsuariosRepository>();
@@ -71,8 +71,10 @@ namespace Devboost.DroneDelivery.UnitTestsBDD.Historias.NaCriacaoDoPedidoSelecio
                 .RuleFor(fake => fake.Login, fake => login)
                 .Generate();
 
+            _usuariosRepositoryMock.Setup(u => u.GetSingleByLogin(login)).Returns(Task.FromResult(newUser));
+            
             var _pedidoCommandMock = new Mock<PedidoCommand>(_droneCommandMock.Object, _pedidosRepositoryMock.Object, _usuariosRepositoryMock.Object, _pagamentoExternalContextMock.Object);
-
+            
             var result = await _pedidoCommandMock.Object.InserirPedido(pedido);
             _scenarioContext.Add("FinalResult", result);
         }
